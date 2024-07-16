@@ -12,7 +12,7 @@ import { NavItemProps } from '../types'
 
 export const Header: React.FC = () => {
     return (
-      <header className='flex justify-between px-36 py-2'>
+      <header className='flex justify-between mx-36 my-2'>
         
           {/* logo section */}
         <div className=' rounded-lg px-8 py-4 grid items-center'>
