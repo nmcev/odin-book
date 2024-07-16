@@ -16,20 +16,25 @@ export const Header: React.FC = () => {
         
           {/* logo section */}
         <div className=' rounded-lg px-8 py-4 grid items-center'>
+        <Link to={'/'} className='logo-hover' >
         <img 
         src={lightLogo} 
         className='block dark:hidden' 
         width={28} 
         height={28} 
         alt="Threads Logo Light" 
-      />
+            />
+      </Link>
+
+      <Link to={'/'} className='logo-hover' >
       <img 
         src={darkLogo} 
         className='hidden dark:block' 
         width={28} 
         height={28} 
         alt="Threads Logo Dark" 
-                />
+            />
+        </Link>
             </div>
 
 
