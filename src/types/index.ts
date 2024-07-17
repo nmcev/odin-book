@@ -8,7 +8,7 @@ export interface NavItemProps {
 }
 
 export interface PostInterface{
-    _id: number,
+    _id: string,
     content: string,
     media: string,
     author: author,
