@@ -22,7 +22,9 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
       try {
         const endpoint = isLoggedIn ? `http://localhost:3000/api/posts/user?page=${page}&limit=10` : `http://localhost:3000/api/posts?page=${page}&limit=10`;
 
-      const response = await fetch(endpoint);
+          const response = await fetch(endpoint, {
+          credentials: 'include'
+      });
       const data = await response.json();
 
 
