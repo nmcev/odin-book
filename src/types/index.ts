@@ -25,3 +25,13 @@ export interface PostProps {
     post: PostInterface
 }
   
+export interface PostContextProps {
+    posts: PostInterface[];
+    fetchPosts: (page: number, isLoggedIn: boolean) => Promise<void>;
+    loading: boolean;
+    error: unknown;
+    hasMore: boolean;
+    setPage: React.Dispatch<React.SetStateAction<number>>;
+    page: number
+}
+  
