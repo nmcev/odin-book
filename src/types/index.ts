@@ -35,3 +35,12 @@ export interface PostContextProps {
     page: number
 }
   
+
+export interface User {
+    username: string,
+    bio: string,
+    profilePic: string,
+    name: string,
+    _id: string,
+    followers?: [] | undefined
+}
