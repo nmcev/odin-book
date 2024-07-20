@@ -1,4 +1,4 @@
-import React, { useState }  from 'react'
+import React, { useContext, useState }  from 'react'
 import lightLogo from '/threads-logo-black.svg'
 import darkLogo from '/threads-logo-white.svg'
 import { Link } from 'react-router-dom'
@@ -9,8 +9,10 @@ import { NotificationIcon } from '../assets/icons/Navbar/NotificationIcon'
 import { ProfileIcon } from '../assets/icons/Navbar/ProfileIcon'
 import clsx from 'clsx'
 import { NavItemProps } from '../types'
+import { AuthContext } from '../contexts/AuthContext'
 
 export const Header: React.FC = () => {
+  const authContext = useContext(AuthContext)
   return (
       <header className='flex w-full gap-72 justify-center py-2 fixed backdrop:blur-xl top-0 bg-[rgba(255,255,255,0.85)] dark:backdrop:opacity-50 dark:bg-[#10101094]'>
         
@@ -67,13 +69,25 @@ export const Header: React.FC = () => {
           </nav>
 
           {/* login button */}
-          <div className='rounded-lg px-8 py-4 grid items-center'>
-             <button className='bg-black text-white rounded-lg px-4 py-[7px] font-semibold font-sans text-sm'>
-                  <Link to={'/login'}>
-                     Log in
-                  </Link>
-            </button>
-          </div>
+      {!authContext?.isLoggedIn ? (
+        <div className='rounded-lg px-8 py-4 grid items-center'>
+          <button className='bg-black text-white rounded-lg px-4 py-[7px] font-semibold font-sans text-sm'>
+            <Link to={'/login'}>
+              Log in
+            </Link>
+          </button>
+        </div>
+
+      ) : (
+        <div className='rounded-lg px-8 py-4 grid items-center'>
+        <button onClick={authContext.logout} className='bg-red-500 text-white rounded-lg px-4 py-[7px] font-semibold font-sans text-sm'>
+            Log out
+        </button>
+      </div>
+
+      )
+        
+      }
     </header>
   )
 }
