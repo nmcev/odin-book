@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { HomePage } from './pages/HomePage.tsx'
 import { LoginPage } from './pages/LoginPage.tsx'
 import { AuthContextProvider } from './contexts/AuthContext.tsx'
+import { ProfilePage } from './pages/ProfilePage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/profile',
-        element: <h1>search</h1>
+        element: <ProfilePage />
       }
     ]
   }, {
