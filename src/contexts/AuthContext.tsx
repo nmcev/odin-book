@@ -1,14 +1,7 @@
 import { FC, ReactNode, createContext, useState, useEffect } from "react";
 
 export const AuthContext = createContext<AuthContextProps | null>(null);
-
-interface User {
-    username: string,
-    bio: string,
-    profilePic: string,
-    name: string,
-    _id: string,
-}
+import { User } from "../types";
 
 interface AuthContextProps {
     login: (username: string, password: string) => void;
