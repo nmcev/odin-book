@@ -2,12 +2,18 @@ import React, { useContext, useState } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
 import { Tabs } from '../components/Tabs';
 import { Post } from '../components/Post';
+import { useNavigate } from 'react-router-dom';
 
 export const ProfilePage:React.FC = () => {
     const authContext = useContext(AuthContext);
-    const user = { ...authContext?.user }
+    const user = authContext?.user
     const [activeTab, setActiveTab] = useState('Threads');
+    const navigate = useNavigate();
 
+
+    const handleFollowersPage = (username: string) => {
+        navigate(`/${username}/followers`);
+    }
     return (
         <div className="min-h-screen mt-24  mx-auto flex  flex-col  gap-8 max-w-2xl">
             
@@ -18,20 +24,25 @@ export const ProfilePage:React.FC = () => {
                 <div className='flex bg-white flex-1 gap-5 justify-between'>
 
                     <div className='flex-1'>
-                        <h2 className='text-2xl font-bold'>{user.name || 'name'}</h2>
-                        <span className='text-[15px]'>{ user.username ||"username"}</span>
+                        <h2 className='text-2xl font-bold'>{user?.name || 'name'}</h2>
+                        <span className='text-[15px]'>{ user?.username ||"username"}</span>
                     </div>
 
 
                      {/* image section */}
                      <div className='rounded-full'>
-                         <img  src={user.profilePic || ''} className='object-fill rounded-full max-w-[84px]' alt={user.name} />
+                         <img  src={user?.profilePic || ''} className='object-fill rounded-full max-w-[84px]' alt={user?.name} />
                      </div>
                 </div>
                 
-                    <div className='flex flex-col gap-2'>
-                    <p className='text-[15px]'>{user.bio}</p>
-                    <p className='text-[15px] text-[#999999]'> <span className='text-[15x]'>{user.followers && user.followers.length}</span> followers </p>
+                    <div className='flex flex-col gap-2 '>
+                    <p className='text-[15px]'>{user?.bio}</p>
+                    {user?.username && (
+                        <button onClick={() => handleFollowersPage(user.username)} className="text-[15px] text-[#999999] relative top-8 w-fit group cursor-pointer">
+                            <span className="text-[15px]">{user?.followers && user.followers.length}</span> followers
+                            <span className="block h-[1px] w-full bg-slate-700 absolute top-[17px] left-0 scale-x-0 group-hover:scale-x-100 "></span>
+                        </button>
+                    )}
                     </div>
 
 
@@ -43,14 +54,14 @@ export const ProfilePage:React.FC = () => {
             <div className=" flex items-center flex-col divide-y-[1.5px] gap-2">
 
                 
-                {activeTab === 'Threads' ? (user.posts?.map((post) => {
+                {activeTab === 'Threads' ? (user?.posts?.map((post) => {
                     return (
                         <Post key={post._id} post={post} />
 
                     )
                 })
                 ) : (
-                    (user.repostedPosts?.map((post) => (
+                    (user?.repostedPosts?.map((post) => (
                         <Post key={post._id} post={post} />
                     ))
                     )  
