@@ -1,8 +1,9 @@
 import clsx from "clsx";
-import { useState } from "react";
-
-export const Tabs = () => {
-    const [activeTab, setActiveTab] = useState('Threads');
+interface TabsProps {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+}
+export const Tabs: React.FC<TabsProps> = ({activeTab, setActiveTab}) => {
   
     return (
       <div className="relative">
