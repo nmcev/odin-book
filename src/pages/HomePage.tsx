@@ -1,29 +1,33 @@
-import { useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import { Post } from "../components/Post";
 import { PostContext } from "../contexts/PostContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 export const HomePage = () => {
   const postContext = useContext(PostContext);
+  const auth = useContext(AuthContext);
 
 
-  const handleScroll = () => {
+  const handleScroll =  useCallback(() => {
     const isScrollAtBottom = window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight;
 
     if (isScrollAtBottom && !postContext?.loading && postContext?.hasMore) {
       postContext.setPage((prevPage) => prevPage + 1);
     }
-  };
+  }, [postContext])
 
   
   useEffect(() => {
-  
-    postContext?.fetchPosts(postContext.page, false)
- }, [postContext?.page])
+    if (auth?.isLoggedIn !== undefined) {
+      postContext?.fetchPosts(postContext.page, auth.isLoggedIn);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [postContext?.page, auth?.isLoggedIn])
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [postContext?.loading, postContext?.hasMore]);
+  }, [postContext?.loading, postContext?.hasMore, handleScroll]);
 
 
   return (
@@ -31,12 +35,6 @@ export const HomePage = () => {
       {postContext?.posts.map((post) => (
         <Post key={post._id} post={post} />
       ))}
-
-      {postContext?.loading && <div>Loading...</div>}
-
-      {!postContext?.hasMore && <div>No more content</div>}
-
-      {postContext?.hasMore && <div>Error...</div>}
     </div>
   );
 };
