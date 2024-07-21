@@ -42,5 +42,7 @@ export interface User {
     profilePic: string,
     name: string,
     _id: string,
-    followers?: [] | undefined
+    followers?: User[];
+    posts?: PostInterface[]; 
+    repostedPosts?: PostInterface[]; 
 }
