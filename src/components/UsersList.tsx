@@ -5,9 +5,8 @@ import { User } from '../types';
 
 interface UsersListProps {
   followers: User[];
-  userId: string;
 }
-export const UsersList: React.FC<UsersListProps> = ({ followers, userId }) => {
+export const UsersList: React.FC<UsersListProps> = ({ followers }) => {
     
     const followContext = useContext(FollowContext);
     
