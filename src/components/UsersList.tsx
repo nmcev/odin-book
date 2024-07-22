@@ -58,7 +58,7 @@ export const UsersList: React.FC<UsersListProps> = ({ followers, userId }) => {
             <h2 className="text-lg font-semibold text-gray-800">{follower.username}</h2>
           </div>
     
-            { currentUser?._id === userId && (
+            { currentUser &&currentUser?._id !== follower._id && (
                     <button
 
                  onClick={() => {
