@@ -63,7 +63,7 @@ export const Post: React.FC<PostProps> = ({post}) => {
               
             <div className='flex gap-1 items-center'>
             <CommentIcon />
-              <span className=' font-normal  text-[#424242]  text-xs text-start'>3</span>
+              <span className=' font-normal  text-[#424242]  text-xs text-start'>{post.comments.length}</span>
             </div>
 
               
