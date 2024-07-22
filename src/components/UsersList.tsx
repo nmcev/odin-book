@@ -4,7 +4,7 @@ import { FollowContext } from '../contexts/FollowContext';
 import { User } from '../types';
 
 interface UsersListProps {
-  followers: User[];
+  followers: User[] | undefined;
 }
 export const UsersList: React.FC<UsersListProps> = ({ followers }) => {
     
@@ -34,7 +34,7 @@ export const UsersList: React.FC<UsersListProps> = ({ followers }) => {
         });
   
         if (res.ok && setFollowing) {
-          const followedUser = followers.find(user => user._id === userId);
+          const followedUser = followers?.find(user => user._id === userId);
     if (followedUser && following) {
       setFollowing([...following, followedUser]);
     }
@@ -81,7 +81,7 @@ export const UsersList: React.FC<UsersListProps> = ({ followers }) => {
       ))}
             
         {
-          followers.length === 0 && (
+          followers?.length === 0 && (
             <h1>No users</h1>
           )
         }
