@@ -8,6 +8,7 @@ import { LoginPage } from './pages/LoginPage.tsx'
 import { AuthContextProvider } from './contexts/AuthContext.tsx'
 import { ProfilePage } from './pages/ProfilePage.tsx'
 import { FollowersPage } from './pages/FollowersPage.tsx'
+import { FollowingPage } from './pages/FollowingPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: '/:username/followers',
         element:<FollowersPage />
+      },
+      {
+        path: '/profile/following',
+        element:<FollowingPage />
       }
     ]
   }, {
