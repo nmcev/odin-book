@@ -43,7 +43,7 @@ export interface User {
     name: string,
     _id: string,
     followers?: User[];
-    following?: string[];
+    following?: User[];
     posts?: PostInterface[]; 
     repostedPosts?: PostInterface[]; 
 }
