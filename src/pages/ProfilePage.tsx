@@ -3,17 +3,24 @@ import { AuthContext } from '../contexts/AuthContext'
 import { Tabs } from '../components/Tabs';
 import { Post } from '../components/Post';
 import { useNavigate } from 'react-router-dom';
+import { FollowContext } from '../contexts/FollowContext';
 
 export const ProfilePage:React.FC = () => {
     const authContext = useContext(AuthContext);
     const user = authContext?.user
     const [activeTab, setActiveTab] = useState('Threads');
     const navigate = useNavigate();
+    const followContext = useContext(FollowContext);
 
 
     const handleFollowersPage = (username: string) => {
         navigate(`/${username}/followers`);
     }
+
+    const handleFollowingPage = () => {
+        navigate(`/profile/following`);
+    }
+
     return (
         <div className="min-h-screen mt-24  mx-auto flex  flex-col  gap-8 max-w-2xl">
             
@@ -38,10 +45,20 @@ export const ProfilePage:React.FC = () => {
                     <div className='flex flex-col gap-2 '>
                     <p className='text-[15px]'>{user?.bio}</p>
                     {user?.username && (
+                        <div className='flex gap-3'>
                         <button onClick={() => handleFollowersPage(user.username)} className="text-[15px] text-[#999999] relative top-8 w-fit group cursor-pointer">
-                            <span className="text-[15px]">{user?.followers && user.followers.length}</span> followers
+                            <span className="text-[15px]">{followContext?.followers && followContext.followers.length}</span> followers
                             <span className="block h-[1px] w-full bg-slate-700 absolute top-[17px] left-0 scale-x-0 group-hover:scale-x-100 "></span>
                         </button>
+
+
+                            { user &&
+                                <button onClick={handleFollowingPage} className="text-[15px] text-[#999999] relative top-8 w-fit group cursor-pointer">
+                                    <span className="text-[15px]">{followContext?.following && followContext.following.length}</span> following
+                                    <span className="block h-[1px] w-full bg-slate-700 absolute top-[17px] left-0 scale-x-0 group-hover:scale-x-100 "></span>
+                                </button>
+                            }
+                        </div>
                     )}
                     </div>
 
