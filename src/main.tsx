@@ -10,6 +10,7 @@ import { ProfilePage } from './pages/ProfilePage.tsx'
 import { FollowersPage } from './pages/FollowersPage.tsx'
 import { FollowingPage } from './pages/FollowingPage.tsx'
 import { UserPage } from './pages/UserPage.tsx'
+import { PostPage } from './pages/PostPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: '/profile',
         element: <ProfilePage />
+      },
+      {
+        path: '/:username/:postId',
+        element: <PostPage />
       },
       {
         path: '/:username/followers',
