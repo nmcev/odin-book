@@ -13,7 +13,7 @@ export interface PostInterface{
     media: string,
     author: author,
     likes: number,
-    comments: []
+    comments: Comment[]
 }
 
 export interface author {
@@ -47,4 +47,11 @@ export interface User {
     following?: User[];
     posts?: PostInterface[]; 
     repostedPosts?: PostInterface[]; 
+}
+
+interface Comment {
+    _id: string;
+    author: User;
+    content: string
+    createdAt: Date;
 }
