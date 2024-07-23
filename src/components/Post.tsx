@@ -5,6 +5,7 @@ import { RepostIcon } from '../assets/icons/Post/RepostIcon'
 import { DotsIcons } from '../assets/icons/Post/DotsIcons'
 import clsx from 'clsx'
 import { PostProps } from '../types'
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -13,6 +14,7 @@ export const Post: React.FC<PostProps> = ({post}) => {
 
     const [isBouncing, setIsBouncing] = useState(false);
 
+  const navigate = useNavigate();
     const handleClick = () => {
       setIsBouncing(true);
       setTimeout(() => setIsBouncing(false), 200);
@@ -44,7 +46,7 @@ export const Post: React.FC<PostProps> = ({post}) => {
         </div>
 
 
-        <div className='pb-4'>
+      <div className=' cursor-pointer p-5' onClick={() => navigate(`/${post.author.username}/${post._id}`) }>
     <p className='text-[15px] mb-2'>{post.content}</p>
             {post.media && (
    
