@@ -13,6 +13,7 @@ export interface PostInterface{
     media: string,
     author: author,
     likes: number,
+    comments: []
 }
 
 export interface author {
