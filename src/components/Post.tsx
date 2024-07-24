@@ -4,13 +4,13 @@ import { CommentIcon } from '../assets/icons/Post/CommentIcon'
 import { RepostIcon } from '../assets/icons/Post/RepostIcon'
 import { DotsIcons } from '../assets/icons/Post/DotsIcons'
 import clsx from 'clsx'
-import { PostProps } from '../types'
+import { Page, PostProps } from '../types'
 import { useNavigate } from 'react-router-dom'
 
 
 
 
-export const Post: React.FC<PostProps> = ({post}) => {
+export const Post: React.FC<PostProps> = ({post, page}) => {
 
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -73,11 +73,12 @@ export const Post: React.FC<PostProps> = ({post}) => {
               <span className=' font-normal  text-[#424242]  text-xs text-start'>{post.likes}</span>
             </div>
             
-              
+          {  page === Page.IndexPage &&        
             <div className='flex gap-1 items-center'>
             <CommentIcon />
               <span className=' font-normal  text-[#424242]  text-xs text-start'>{post.comments.length}</span>
-            </div>
+              </div>
+            }
 
               
             <div className='flex gap-1 items-center'>

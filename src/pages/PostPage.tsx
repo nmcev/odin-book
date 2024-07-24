@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Post } from '../components/Post';
-import { PostInterface } from '../types';
+import { Page, PostInterface } from '../types';
 import moment from 'moment';
 
 export const PostPage: React.FC = () => {
@@ -31,7 +31,7 @@ export const PostPage: React.FC = () => {
         <div className="min-h-screen my-24 flex items-center flex-col divide-y-[1.5px] ">
             {post ? (
                 <div className='flex flex-col gap-4 '>
-                    <Post post={post} />
+                    <Post post={post} page={Page.PostPage} />
                     <div className='flex flex-col gap-4 divide-y-[1.5px]'>
                     {post.comments.map((comment) => (
                         <div key={comment._id} className="p-4 items-center max-w-lg flex gap-4">
