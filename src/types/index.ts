@@ -24,6 +24,12 @@ export interface author {
 
 export interface PostProps {
     post: PostInterface
+    page: Page
+}
+
+export enum Page {
+    IndexPage = 'IndexPage',
+    PostPage = 'PostPage'
 }
   
 export interface PostContextProps {
