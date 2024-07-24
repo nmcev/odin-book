@@ -35,6 +35,10 @@ export const HomePage = () => {
       {postContext?.posts.map((post) => (
         <Post key={post._id} post={post} />
       ))}
+
+      {!postContext?.hasMore && <h1>No more content</h1>}
+      {postContext?.loading && <h1>Loading</h1>}
+
     </div>
   );
 };
