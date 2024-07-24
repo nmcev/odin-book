@@ -12,7 +12,9 @@ import { useNavigate } from 'react-router-dom'
 
 export const Post: React.FC<PostProps> = ({post}) => {
 
-    const [isBouncing, setIsBouncing] = useState(false);
+
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [isBouncing, setIsBouncing] = useState(false);
 
   const navigate = useNavigate();
     const handleClick = () => {
@@ -48,10 +50,19 @@ export const Post: React.FC<PostProps> = ({post}) => {
 
       <div className=' cursor-pointer p-5' onClick={() => navigate(`/${post.author.username}/${post._id}`) }>
     <p className='text-[15px] mb-2'>{post.content}</p>
-            {post.media && (
-   
-          <img src={post.media} className='object-cover' style={{ maxWidth: '100%', maxHeight: '300px', objectFit: 'cover' }} />
+      {post.media && (
+           <>
+              
+            {!isImageLoaded && (
+              <div className="placeholder" style={{ width: '100%', height: '300px', backgroundColor: '#f0f0f0' }}></div>
+             )}
+            
+              <img src={post.media}
+              onLoad={() => setIsImageLoaded(true)}
+              style={{ display: isImageLoaded ? 'block' : 'none', objectFit: 'cover', maxWidth: '100%', maxHeight: '300px' }}
+              className='object-cover' />
 
+</>
     )}
 </div>
 
