@@ -45,9 +45,32 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
     }
   };
 
+  const likePost = async (postId: string, userId: string) => {
+    
+    try {
+
+      const res = await fetch(`http://localhost:3000/api/posts/like/${postId}`, {
+        method: 'POST',
+        credentials: 'include',
+      });
+
+      if (res.ok) {
+        setPosts((prevPosts) =>
+          prevPosts.map((post) =>
+            post._id === postId ? { ...post, likes: [...post.likes, userId] } : post
+          )
+        );
+  
+      }
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+
 
     return (
-        <PostContext.Provider value={{ posts, fetchPosts, loading, error, hasMore, page, setPage }}>
+        <PostContext.Provider value={{ posts, fetchPosts, loading, error, hasMore, page, setPage, likePost }}>
         {children}
       </PostContext.Provider>
     )
