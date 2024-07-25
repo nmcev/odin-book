@@ -4,6 +4,7 @@ import { Tabs } from '../components/Tabs';
 import { Post } from '../components/Post';
 import { useNavigate } from 'react-router-dom';
 import { FollowContext } from '../contexts/FollowContext';
+import { PostContext } from '../contexts/PostContext';
 
 export const ProfilePage:React.FC = () => {
     const authContext = useContext(AuthContext);
@@ -11,6 +12,7 @@ export const ProfilePage:React.FC = () => {
     const [activeTab, setActiveTab] = useState('Threads');
     const navigate = useNavigate();
     const followContext = useContext(FollowContext);
+    const postContext = useContext(PostContext)
 
 
     const handleFollowersPage = (username: string) => {
@@ -73,13 +75,13 @@ export const ProfilePage:React.FC = () => {
                 
                 {activeTab === 'Threads' ? (user?.posts?.map((post) => {
                     return (
-                        <Post key={post._id} post={post} />
+                        <Post key={post._id} post={post} onLike={() => postContext?.likePost(post._id, user._id)} />
 
                     )
                 })
                 ) : (
                     (user?.repostedPosts?.map((post) => (
-                        <Post key={post._id} post={post} />
+                        <Post key={post._id} post={post} onLike={() => postContext?.likePost(post._id, user._id)} />
                     ))
                     )  
                 )
