@@ -24,7 +24,8 @@ export interface author {
 
 export interface PostProps {
     post: PostInterface
-    page: Page
+    page?: Page,
+    onLike?: () => void;
 }
 
 export enum Page {
