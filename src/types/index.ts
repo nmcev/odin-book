@@ -1,6 +1,7 @@
 export interface IconProps {
     w?: number,
     h?: number,
+    liked?: boolean
 }
 export interface NavItemProps {
     children: React.ReactNode,
@@ -17,6 +18,7 @@ export interface PostInterface{
 }
 
 export interface author {
+    _id: string,
     username: string,
     profilePic: string
 }
