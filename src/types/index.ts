@@ -12,7 +12,7 @@ export interface PostInterface{
     content: string,
     media: string,
     author: author,
-    likes: number,
+    likes: User[],
     comments: Comment[]
 }
 
