@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 
 
 
-export const Post: React.FC<PostProps> = ({post, page}) => {
+export const Post: React.FC<PostProps> = ({post, page,  onLike}) => {
 
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -69,7 +69,10 @@ export const Post: React.FC<PostProps> = ({post, page}) => {
 
        <div className=' flex gap-4'>
             <div className='flex gap-1 items-center'>
+              <div onClick={onLike}>
               <LikeIcon />
+
+              </div>
               <span className=' font-normal  text-[#424242]  text-xs text-start'>{post.likes.length}</span>
             </div>
             
