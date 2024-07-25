@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { LikeIcon } from '../assets/icons/Post/LikeIcon'
 import { CommentIcon } from '../assets/icons/Post/CommentIcon'
 import { RepostIcon } from '../assets/icons/Post/RepostIcon'
@@ -16,12 +16,21 @@ export const Post: React.FC<PostProps> = ({post, page,  onLike}) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [isBouncing, setIsBouncing] = useState(false);
 
+  const [liked, setLiked] = useState<boolean>(post.likes.includes(post?.author?._id ));
   const navigate = useNavigate();
     const handleClick = () => {
       setIsBouncing(true);
       setTimeout(() => setIsBouncing(false), 200);
     };
 
+    const handleLike = () => {
+      onLike?.();
+      setLiked(prev => !prev); 
+    };
+  
+    useEffect(() => {
+      setLiked(post.likes.includes(post.author._id));
+    }, [post.author._id, post.likes]);
     return (
     
 
@@ -69,8 +78,8 @@ export const Post: React.FC<PostProps> = ({post, page,  onLike}) => {
 
        <div className=' flex gap-4'>
             <div className='flex gap-1 items-center'>
-              <div onClick={onLike}>
-              <LikeIcon />
+              <div onClick={handleLike}>
+                <LikeIcon liked={liked} />
 
               </div>
               <span className=' font-normal  text-[#424242]  text-xs text-start'>{post.likes.length}</span>
