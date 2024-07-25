@@ -32,7 +32,7 @@ export const PostPage: React.FC = () => {
 
     const handleLike = () => {
 
-        if (currentUser) {
+        if (currentUser && !post?.likes.includes(currentUser._id)) {
             postContext?.likePost(post?._id ?? '', currentUser?._id ?? '');
         setPost(prevPost => {
             if (prevPost) {
@@ -44,6 +44,19 @@ export const PostPage: React.FC = () => {
             }
             return prevPost;
         });
+        } else if (currentUser) {
+            postContext?.removeLike(post?._id ?? '', currentUser?._id ?? '');
+            setPost(prevPost => {
+                if (prevPost) {
+                    const updatedLikes = prevPost.likes.filter(id => id !== currentUser._id);
+        
+                    return {
+                        ...prevPost,
+                        likes: updatedLikes
+                    };
+                }
+                return prevPost;
+            });
     }
     }
     return (
