@@ -34,7 +34,7 @@ export const HomePage = () => {
   return (
     <div className="min-h-screen mt-24 flex items-center flex-col divide-y-[1.5px] gap-2">
       {postContext?.posts.map((post) => (
-        <Post key={post._id} post={post} page={Page.IndexPage}  />
+        <Post key={post._id} post={post} page={Page.IndexPage} onLike={() => postContext.likePost(post?._id, auth?.user?._id ?? '')}  />
       ))}
 
       {!postContext?.hasMore && <h1>No more content</h1>}
