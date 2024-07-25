@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect } from "react";
 import { Post } from "../components/Post";
 import { PostContext } from "../contexts/PostContext";
 import { AuthContext } from "../contexts/AuthContext";
-import { Page } from "../types";
+import { Page, PostInterface } from "../types";
 
 export const HomePage = () => {
   const postContext = useContext(PostContext);
@@ -31,10 +31,20 @@ export const HomePage = () => {
   }, [postContext?.loading, postContext?.hasMore, handleScroll]);
 
 
+  const handleLike = (post: PostInterface) => {
+
+    if (auth?.user && !post?.likes.includes(auth.user._id)) {
+      postContext?.likePost(post?._id ?? '', auth.user?._id ?? '');
+
+    } else if (auth?.user?._id) {
+      postContext?.removeLike(post?._id ?? '', auth?.user?._id ?? '');
+      
+    }
+  }
   return (
     <div className="min-h-screen mt-24 flex items-center flex-col divide-y-[1.5px] gap-2">
       {postContext?.posts.map((post) => (
-        <Post key={post._id} post={post} page={Page.IndexPage} onLike={() => postContext.likePost(post?._id, auth?.user?._id ?? '')}  />
+        <Post key={post._id} post={post} page={Page.IndexPage} onLike={() => handleLike(post)}  />
       ))}
 
       {!postContext?.hasMore && <h1>No more content</h1>}
