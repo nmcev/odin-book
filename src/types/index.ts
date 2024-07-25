@@ -39,7 +39,8 @@ export interface PostContextProps {
     error: unknown;
     hasMore: boolean;
     setPage: React.Dispatch<React.SetStateAction<number>>;
-    page: number
+    page: number,
+    likePost: (postId: string, userId: string) => void
 }
   
 
