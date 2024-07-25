@@ -70,7 +70,7 @@ export const Post: React.FC<PostProps> = ({post, page}) => {
        <div className=' flex gap-4'>
             <div className='flex gap-1 items-center'>
               <LikeIcon />
-              <span className=' font-normal  text-[#424242]  text-xs text-start'>{post.likes}</span>
+              <span className=' font-normal  text-[#424242]  text-xs text-start'>{post.likes.length}</span>
             </div>
             
           {  page === Page.IndexPage &&        
