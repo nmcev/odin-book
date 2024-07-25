@@ -67,10 +67,33 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
     }
 
   }
+    const removeLike = async (postId: string, userId: string) => {
+    
+      try {
+  
+        const res = await fetch(`http://localhost:3000/api/posts/unlike/${postId}`, {
+          method: 'POST',
+          credentials: 'include',
+        });
+  
+        if (res.ok) {
+          setPosts((prevPosts) =>
+            prevPosts.map((post) =>
+              post._id === postId ? { ...post, likes: post.likes.filter(id => id !== userId) } : post
+            )
+          );
+        
+    
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  
 
 
     return (
-        <PostContext.Provider value={{ posts, fetchPosts, loading, error, hasMore, page, setPage, likePost }}>
+        <PostContext.Provider value={{ posts, fetchPosts, loading, error, hasMore, page, setPage, likePost, removeLike }}>
         {children}
       </PostContext.Provider>
     )
