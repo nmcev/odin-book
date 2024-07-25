@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import { LikeIcon } from '../assets/icons/Post/LikeIcon'
 import { CommentIcon } from '../assets/icons/Post/CommentIcon'
 import { RepostIcon } from '../assets/icons/Post/RepostIcon'
@@ -6,6 +6,7 @@ import { DotsIcons } from '../assets/icons/Post/DotsIcons'
 import clsx from 'clsx'
 import { Page, PostProps } from '../types'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../contexts/AuthContext'
 
 
 
@@ -16,7 +17,8 @@ export const Post: React.FC<PostProps> = ({post, page,  onLike}) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [isBouncing, setIsBouncing] = useState(false);
 
-  const [liked, setLiked] = useState<boolean>(post.likes.includes(post?.author?._id ));
+  const currentUserId  = useContext(AuthContext)?.user?._id
+  const [liked, setLiked] = useState<boolean>(post.likes.includes(currentUserId?? ''));
   const navigate = useNavigate();
     const handleClick = () => {
       setIsBouncing(true);
@@ -29,8 +31,8 @@ export const Post: React.FC<PostProps> = ({post, page,  onLike}) => {
     };
   
     useEffect(() => {
-      setLiked(post.likes.includes(post.author._id));
-    }, [post.author._id, post.likes]);
+      setLiked(post.likes.includes(currentUserId?? ''));
+    }, [ currentUserId, post.likes]);
     return (
     
 
@@ -82,7 +84,7 @@ export const Post: React.FC<PostProps> = ({post, page,  onLike}) => {
                 <LikeIcon liked={liked} />
 
               </div>
-              <span className=' font-normal  text-[#424242]  text-xs text-start'>{post.likes.length}</span>
+              <span className=' font-normal select-none  text-[#424242]  text-xs text-start'>{post.likes.length}</span>
             </div>
             
           {  page === Page.IndexPage &&        
