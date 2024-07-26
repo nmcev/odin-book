@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { User } from '../types';
 import { Tabs } from '../components/Tabs';
 import { Post } from '../components/Post';
-export const UserPage = () => {
+export const UserPage: React.FC = () => {
     const { username } = useParams();
 
     const [user, setUser] = useState<User>();
