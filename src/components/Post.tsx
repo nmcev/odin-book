@@ -5,7 +5,7 @@ import { RepostIcon } from '../assets/icons/Post/RepostIcon'
 import { DotsIcons } from '../assets/icons/Post/DotsIcons'
 import clsx from 'clsx'
 import { Page, PostProps } from '../types'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
 
 
@@ -38,9 +38,9 @@ export const Post: React.FC<PostProps> = ({post, page,  onLike}) => {
 
 <div className='grid grid-cols-7 px-5 py-5 max-w-lg '>
 
-    <div className="col-span-1 ">
+    <Link to={`/${post.author.username}`} className="col-span-1 ">
           <img src={post.author.profilePic} className='rounded-full' alt="User Avatar" width={36} />
-    </div>
+    </Link>
 
 
 
@@ -49,9 +49,9 @@ export const Post: React.FC<PostProps> = ({post, page,  onLike}) => {
       
         <div className=' flex gap-2 items-center justify-between '>
 
-          <div className='font-bold text-[15px] animate-none'>
+          <Link to={`/${post.author.username}`} className='font-bold text-[15px] animate-none'>
                 {post.author.username}
-            </div>
+            </Link>
             
             <div onClick={handleClick} className={clsx('cursor-pointer hover:bg-[rgba(219,219,219,0.41)] p-2 rounded-full', {'bounce' : isBouncing})}>
               <DotsIcons />
