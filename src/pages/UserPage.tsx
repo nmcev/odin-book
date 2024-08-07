@@ -28,7 +28,6 @@ export const UserPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [username])
 
-    console.log(user)
   return (
     <div className="min-h-screen mt-24  mx-auto flex  flex-col  gap-8 max-w-2xl">
             

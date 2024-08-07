@@ -110,7 +110,6 @@ export const ProfilePage:React.FC = () => {
 
                     setPfp(result.secure_url)
 
-                    console.log(result)
                     
                     await fetch('http://localhost:3000/api/edit-profile', {
                         method: 'PATCH',
