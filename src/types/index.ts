@@ -14,7 +14,7 @@ export interface PostInterface{
     media: string,
     author: author,
     likes: string[],
-    comments: Comment[]
+    comments: CommentInterface[]
 }
 
 export interface author {
@@ -61,7 +61,7 @@ export interface User {
     repostedPosts?: PostInterface[]; 
 }
 
-interface Comment {
+export interface CommentInterface {
     _id: string;
     author: User;
     content: string
