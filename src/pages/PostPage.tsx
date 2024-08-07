@@ -5,6 +5,7 @@ import { Page, PostInterface } from '../types';
 import moment from 'moment';
 import { PostContext } from '../contexts/PostContext';
 import { AuthContext } from '../contexts/AuthContext';
+import { Comment } from '../components/Comment';
 
 export const PostPage: React.FC = () => {
     const { postId } = useParams<{ postId: string }>();
@@ -66,19 +67,8 @@ export const PostPage: React.FC = () => {
                 <div className='flex flex-col gap-4 '>
                     <Post post={post} page={Page.PostPage} onLike={handleLike} />
                     <div className='flex flex-col gap-4 divide-y-[1.5px]'>
-                    {post.comments.map((comment) => (
-                        <div key={comment._id} className="p-4 items-center max-w-lg flex gap-4">
-                            <img src={comment.author.profilePic} alt="Profile" className="rounded-full w-10 h-10 object-cover" />
-                            <div className="flex-1">
-                                <div>
-                                    <h2 className="text-[15px] font-bold">{comment.author.username}</h2>
-                                    <span className="text-xs text-gray-500 block">
-                                        {moment(comment.createdAt).format('MMMM Do YYYY')}
-                                    </span>
-                                </div>
-                                <p className="mt-1 text-gray-700">{comment.content}</p>
-                            </div>
-                        </div>
+                        {post.comments.map((comment) => (
+                        <Comment comment={comment} />
                     ))}
                         </div>
                 </div>
