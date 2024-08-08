@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Post } from '../components/Post';
 import { Page, PostInterface } from '../types';
-import moment from 'moment';
 import { PostContext } from '../contexts/PostContext';
 import { AuthContext } from '../contexts/AuthContext';
 import { Comment } from '../components/Comment';
 
 export const PostPage: React.FC = () => {
     const { postId } = useParams<{ postId: string }>();
+    const [newComment, setNewComment] = useState('');
     const [post, setPost] = useState<PostInterface | null>(null);
     const postContext = useContext(PostContext);
 
@@ -60,12 +60,65 @@ export const PostPage: React.FC = () => {
             });
     }
     }
+
+    const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setNewComment(event.target.value);
+    };
+
+
+    const handleCommentSubmit = async () => {
+
+        if (currentUser && newComment.trim()) {
+            const res = await fetch(`http://localhost:3000/api/comments`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    content: newComment,
+                    userId: currentUser._id,
+                    postId: post?._id
+
+                })
+            });
+
+            if (res.ok) {
+                const updatedPost = await fetch(`http://localhost:3000/api/posts/${postId}`, {
+                    credentials: 'include'
+                }).then(res => res.json());
+    
+                setPost(updatedPost);
+                setNewComment('');
+            }
+        }
+    };
+    
     return (
         
         <div className="min-h-screen my-24 flex items-center flex-col divide-y-[1.5px] ">
             {post ? (
                 <div className='flex flex-col gap-4 '>
                     <Post post={post} page={Page.PostPage} onLike={handleLike} />
+
+                    {/* comment input */}
+                    {currentUser &&
+                        <div className='w-full max-w-lg'>
+                            <textarea
+                                value={newComment}
+                                onChange={handleCommentChange}
+                                placeholder="write a comment..."
+                                className="w-full p-2 border rounded-md resize-none"
+                                rows={3}
+                            />
+                            <button
+                                onClick={handleCommentSubmit}
+                                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                            >
+                                Post Comment
+                            </button>
+                        </div>
+                    }
                     <div className='flex flex-col gap-4 divide-y-[1.5px]'>
                         {post.comments.map((comment) => (
                         <Comment comment={comment} />
