@@ -87,7 +87,7 @@ export const Post: React.FC<PostProps> = ({post, page,  onLike}) => {
               <span className=' font-normal select-none  text-[#424242]  text-xs text-start'>{post.likes.length}</span>
             </div>
             
-          {  page === Page.IndexPage &&        
+          {  page !== Page.PostPage &&        
             <div className='flex gap-1 items-center'>
             <CommentIcon />
               <span className=' font-normal  text-[#424242]  text-xs text-start'>{post.comments.length}</span>
