@@ -16,7 +16,7 @@ export const Comment: React.FC<CommentProps> = ({ comment }) => {
                         {moment(comment.createdAt).format('MMMM Do YYYY')}
                     </span>
                 </div>
-                <p className="mt-1 text-gray-700">{comment.content}</p>
+                <p className="mt-1 text-gray-700 dark:text-white">{comment.content}</p>
             </div>
         </div>
   )
