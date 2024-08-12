@@ -12,6 +12,7 @@ import { FollowingPage } from './pages/FollowingPage.tsx'
 import { UserPage } from './pages/UserPage.tsx'
 import { PostPage } from './pages/PostPage.tsx'
 import SearchComponent from './pages/SearchComponent.tsx'
+import { CreatePostPage } from './pages/CreatePostPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
         element: <SearchComponent />
       }, {
         path: '/create-post',
-        element: <h1>search</h1>
+        element: <CreatePostPage />
       }
       , {
         path: '/notifications',
