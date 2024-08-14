@@ -74,10 +74,12 @@ export const Post: React.FC<PostProps> = ({post, page,  onLike}) => {
               <div className="placeholder" style={{ width: '100%', height: '300px', backgroundColor: '#f0f0f0' }}></div>
              )}
             
+                <div className='max-w-lg h-72'>
               <img src={post.media}
               onLoad={() => setIsImageLoaded(true)}
               style={{ display: isImageLoaded ? 'block' : 'none', objectFit: 'cover', maxWidth: '100%', maxHeight: '300px' }}
               className='object-cover' />
+               </div>
 
 </>
     )}
