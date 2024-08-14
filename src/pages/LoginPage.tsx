@@ -72,7 +72,7 @@ export const LoginPage: React.FC = () => {
                         
                     <div>
                                 <label htmlFor="user-select" className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">
-                                    Select User
+                                    Select a User to login 
                                 </label>
                                 <div className="mt-2">
                                     <select
