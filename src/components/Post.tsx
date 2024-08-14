@@ -7,6 +7,7 @@ import clsx from 'clsx'
 import { Page, PostProps } from '../types'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
+import moment from 'moment'
 
 
 
@@ -49,10 +50,15 @@ export const Post: React.FC<PostProps> = ({post, page,  onLike}) => {
       
         <div className=' flex gap-2 items-center justify-between '>
 
+            <div className='flex flex-col'>
           <Link to={`/${post.author.username}`} className='font-bold text-[15px] animate-none'>
                 {post.author.username}
-            </Link>
+          </Link>
             
+            <small className='text-[#3a3a3ada]'>{moment(post.createdAt).format('MMMM Do YYYY')}</small>
+
+          </div>
+          
             <div onClick={handleClick} className={clsx('cursor-pointer hover:bg-[rgba(219,219,219,0.41)] p-2 rounded-full', {'bounce' : isBouncing})}>
               <DotsIcons />
             </div>
