@@ -8,6 +8,7 @@ import { Page, PostProps } from '../types'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
 import moment from 'moment'
+import { Dialog } from './Dialog'
 
 
 
@@ -17,6 +18,8 @@ export const Post: React.FC<PostProps> = ({post, page,  onLike}) => {
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [isBouncing, setIsBouncing] = useState(false);
+
+  const [openedDialog, setOpenDialog] = useState(false);
 
   const currentUserId  = useContext(AuthContext)?.user?._id
   const [liked, setLiked] = useState<boolean>(post.likes.includes(currentUserId?? ''));
@@ -88,12 +91,21 @@ export const Post: React.FC<PostProps> = ({post, page,  onLike}) => {
 
        <div className=' flex gap-4'>
             <div className='flex gap-1 items-center'>
-              <div onClick={handleLike}>
+              <div onClick={() => {
+                currentUserId && handleLike()
+                setOpenDialog(true)
+              }
+                
+              }>
                 <LikeIcon liked={liked} />
 
               </div>
               <span className=' font-normal select-none  text-[#424242]  text-xs text-start'>{post.likes.length}</span>
             </div>
+            { openedDialog && 
+                 <Dialog message="You need to log in to do this action." onClose={() => setOpenDialog(false)} />
+
+            }
             
           {  page !== Page.PostPage &&        
             <Link className='flex gap-1 items-center' to={`/${post.author}/${post._id}`} >
