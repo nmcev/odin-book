@@ -35,7 +35,7 @@ const SearchComponent: React.FC = () => {
     return (
         <div className="min-h-screen mt-24 mx-auto flex flex-col gap-8 max-w-2xl">
             <DebounceInput
-                minLength={2}
+                minLength={1}
                 debounceTimeout={300}
                 value={searchQuery}
                 onChange={(e) => {
