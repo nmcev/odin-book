@@ -94,10 +94,10 @@ export const Post: React.FC<PostProps> = ({post, page,  onLike}) => {
             </div>
             
           {  page !== Page.PostPage &&        
-            <div className='flex gap-1 items-center'>
+            <Link className='flex gap-1 items-center' to={`/${post.author}/${post._id}`} >
             <CommentIcon />
               <span className=' font-normal  text-[#424242]  text-xs text-start'>{post.comments.length}</span>
-              </div>
+              </Link>
             }
 
               
