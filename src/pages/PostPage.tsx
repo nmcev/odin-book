@@ -93,6 +93,7 @@ export const PostPage: React.FC = () => {
             }
         }
     };
+    const reversedComments = post?.comments ? [...post.comments].reverse() : [];
     
     return (
         
@@ -120,7 +121,7 @@ export const PostPage: React.FC = () => {
                         </div>
                     }
                     <div className='flex flex-col gap-4 divide-y-[1.5px]'>
-                        {post.comments.map((comment) => (
+                        {reversedComments.map((comment) => (
                         <Comment comment={comment} />
                     ))}
                         </div>
