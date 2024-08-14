@@ -14,7 +14,8 @@ export interface PostInterface{
     media: string,
     author: author,
     likes: string[],
-    comments: CommentInterface[]
+    comments: CommentInterface[],
+    createdAt: Date,
 }
 
 export interface author {
