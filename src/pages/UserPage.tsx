@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { User } from '../types';
 import { Tabs } from '../components/Tabs';
 import { Post } from '../components/Post';
+import { AuthContext } from '../contexts/AuthContext';
 export const UserPage: React.FC = () => {
     const { username } = useParams();
 
     const [user, setUser] = useState<User>();
+    const authContext = useContext(AuthContext);
+
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('Threads');
 
@@ -25,6 +28,9 @@ export const UserPage: React.FC = () => {
     useEffect(() => {
         fetchAUser()
 
+        if (authContext?.user?.username === username) {
+            navigate('/profile');
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [username])
 
