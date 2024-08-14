@@ -13,7 +13,7 @@ const SearchComponent: React.FC = () => {
         if (query.trim()) {
             setLoading(true); 
             try {
-                const response = await fetch(`http://localhost:3000/api/user?username=${query}`);
+                const response = await fetch(`http://localhost:3000/api/search?username=${query}`);
                 if (response.ok) {
                     const data = await response.json();
                     setResults(data);
