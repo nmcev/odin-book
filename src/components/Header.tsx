@@ -14,6 +14,8 @@ import { Dialog } from './Dialog'
 
 export const Header: React.FC = () => {
   const authContext = useContext(AuthContext)
+  const navigate = useNavigate();
+
   return (
       <header className='flex w-full gap-72 justify-center py-2 fixed backdrop:blur-xl top-0 bg-[rgba(255,255,255,0.85)] dark:backdrop:opacity-50 dark:bg-[#10101094]'>
         
@@ -81,7 +83,12 @@ export const Header: React.FC = () => {
 
       ) : (
         <div className='rounded-lg px-8 py-4 grid items-center'>
-        <button onClick={authContext.logout} className='bg-red-500 text-white rounded-lg px-4 py-[7px] font-semibold font-sans text-sm'>
+            <button onClick={() => {
+              authContext.logout()
+
+              navigate('/')
+              
+            }} className='bg-red-500 text-white rounded-lg px-4 py-[7px] font-semibold font-sans text-sm'>
             Log out
         </button>
       </div>
