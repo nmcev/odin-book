@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { PostContext } from '../contexts/PostContext';
+import { PostInterface } from '../types';
 
 export const CreatePostForm: React.FC = () => {
   const [content, setContent] = useState('');
   const [img, setImg] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { setPosts } = useContext(PostContext) || {}
 
   const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -27,8 +30,14 @@ export const CreatePostForm: React.FC = () => {
         body: JSON.stringify({ media: imgUrl, content })
       })
 
+      const newPost = await res.json();
       if (res.ok) {
         navigate('/')
+        setPosts?.((prevPosts: PostInterface[]) => {
+          if (!prevPosts) return [newPost];
+          return [newPost, ...prevPosts];
+        });
+
       }
     } catch(e) {
       console.error(e);
