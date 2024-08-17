@@ -52,8 +52,10 @@ export const CreatePostForm: React.FC = () => {
     
       const result = await cloudinaryFetch.json();
 
-      if (result.secure_url) {
+      if (result.secure_url && content) {
         postPostData(result.secure_url, content)
+      } else if (result.secure_url && content == '') {
+        postPostData(result.secure_url, ' ');
       }
     } else {
       postPostData('', content)
