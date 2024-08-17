@@ -46,6 +46,7 @@ export interface PostContextProps {
     page: number,
     likePost: (postId: string, userId: string) => void
     removeLike: (postId: string, userId: string) => void
+    setPosts: React.Dispatch<React.SetStateAction<PostInterface[]>>;
 
 }
   

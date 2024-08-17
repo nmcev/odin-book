@@ -93,7 +93,7 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
 
 
     return (
-        <PostContext.Provider value={{ posts, fetchPosts, loading, error, hasMore, page, setPage, likePost, removeLike }}>
+        <PostContext.Provider value={{ posts, fetchPosts, loading, error, hasMore, page, setPage, likePost, removeLike, setPosts }}>
         {children}
       </PostContext.Provider>
     )
