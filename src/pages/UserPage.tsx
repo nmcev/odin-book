@@ -8,6 +8,8 @@ export const UserPage: React.FC = () => {
     const { username } = useParams();
 
     const [user, setUser] = useState<User>();
+    const [followers, setFollowers ] = useState<User[]>()
+    
     const authContext = useContext(AuthContext);
 
     const navigate = useNavigate();
@@ -16,8 +18,9 @@ export const UserPage: React.FC = () => {
     const fetchAUser =  async() => {
     
         const res = await fetch(`http://localhost:3000/api/users/${username}`)
-        const data = await res.json();
+        const data: User = await res.json();
 
+      setFollowers(data.followers)
       setUser(data)
     }
 
@@ -34,6 +37,35 @@ export const UserPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [username])
 
+    const handleFollowUnfollow = async () => {
+        if (user) {
+            const url = `http://localhost:3000/api/${isFollowing() ? 'unfollow' : 'follow'}/${user._id}`;
+            const method = isFollowing() ? 'DELETE' : 'POST';
+
+            await fetch(url, {
+                credentials: 'include',
+                method: method,
+            });
+
+            setFollowers((prevFollowers) => {
+                if (authContext?.user) {
+                    if (isFollowing()) {
+                        // removing the follower
+                        return prevFollowers?.filter(follower => follower._id !== authContext?.user?._id);
+                    } else {
+                        // add the follower
+                        return prevFollowers ? [...prevFollowers, authContext?.user] : [authContext?.user];
+                    }
+                }
+
+            
+            });
+        }
+    };
+      const isFollowing = () => {
+        return followers?.some(follower => follower._id === authContext?.user?._id);
+      }
+    
   return (
     <div className="min-h-screen mt-24  mx-auto flex  flex-col  gap-8 max-w-2xl">
             
@@ -60,7 +92,7 @@ export const UserPage: React.FC = () => {
             {user?.username && (
                 <div className='flex gap-3'>
                 <button onClick={() => handleFollowersPage(user.username)} className="text-[15px] text-[#999999] relative top-8 w-fit group cursor-pointer">
-                    <span className="text-[15px]">{user?.followers && user.followers.length}</span> followers
+                    <span className="text-[15px]">{followers?.length || 0}</span> followers
                     <span className="block h-[1px] w-full bg-slate-700 absolute top-[17px] left-0 scale-x-0 group-hover:scale-x-100 "></span>
                 </button>
 
@@ -69,8 +101,21 @@ export const UserPage: React.FC = () => {
             </div>
 
 
-    </div>
-
+              
+          </div>
+          
+          {authContext?.user && authContext?.user?.username !== username && (
+                <button
+                    onClick={handleFollowUnfollow}
+                    className={`px-4 py-2 rounded-lg text-white transition-colors ${
+                        isFollowing()
+                            ? 'bg-gray-400'
+                            : 'bg-blue-500 hover:bg-blue-600'
+                    }`}
+                >
+                    {isFollowing() ? 'Unfollow' : 'Follow'}
+                </button>
+            )}
     {/* down section */}
     <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
