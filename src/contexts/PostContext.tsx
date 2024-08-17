@@ -13,7 +13,7 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
   const [posts, setPosts] = useState<PostInterface[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<unknown>(null);
   const [hasMore, setHasMore] = useState(true);
 
   const fetchPosts = async (page: number, isLoggedIn: boolean) => {
