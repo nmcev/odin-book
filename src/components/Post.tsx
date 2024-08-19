@@ -9,17 +9,19 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
 import moment from 'moment'
 import { Dialog } from './Dialog'
+import { PostContext } from '../contexts/PostContext'
 
 
 
 
-export const Post: React.FC<PostProps> = ({post, page,  onLike}) => {
+export const Post: React.FC<PostProps> = ({ post, page, onLike }) => {
 
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [isBouncing, setIsBouncing] = useState(false);
 
   const [openedDialog, setOpenDialog] = useState(false);
+  const repost = useContext(PostContext)?.repost
 
   const currentUserId  = useContext(AuthContext)?.user?._id
   const [liked, setLiked] = useState<boolean>(post.likes.includes(currentUserId?? ''));
@@ -115,7 +117,7 @@ export const Post: React.FC<PostProps> = ({post, page,  onLike}) => {
             }
 
               
-            <div className='flex gap-1 items-center'>
+            <div className='flex gap-1 items-center' onClick={async() => repost && await repost(post._id)}>
             <RepostIcon />
             </div>
 
