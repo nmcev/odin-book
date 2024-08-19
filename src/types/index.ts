@@ -49,6 +49,7 @@ export interface PostContextProps {
     setPosts: React.Dispatch<React.SetStateAction<PostInterface[]>>;
     reposts: PostInterface[];
     setReposts: React.Dispatch<React.SetStateAction<PostInterface[]>>;
+    repost: (postId: string) => Promise<void>; 
 
 }
   

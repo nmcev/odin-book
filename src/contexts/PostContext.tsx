@@ -100,10 +100,29 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
 
   }, [currentUser?.repostedPosts])
 
+    const repost = async (postId: string) => {
+    
+    const res = await fetch('http://localhost:3000/api/reposts', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ postId }),
+      credentials: 'include'
+    })
+
+    if (res.ok) {
+      const repostedPost = await res.json();
+
+      setReposts((prevPosts) => 
+        prevPosts ? [...prevPosts, repostedPost] : [repostedPost]
+      )
+    }
+  } 
 
 
     return (
-        <PostContext.Provider value={{ posts, fetchPosts, loading, error, hasMore, page, setPage, likePost, removeLike, setPosts, setReposts, reposts }}>
+        <PostContext.Provider value={{ posts, fetchPosts, loading, error, hasMore, page, setPage, likePost, removeLike, setPosts, setReposts, reposts, repost }}>
         {children}
       </PostContext.Provider>
     )
