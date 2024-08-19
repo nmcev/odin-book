@@ -1,5 +1,6 @@
-import React, { createContext, useState, ReactNode } from "react";
+import React, { createContext, useState, ReactNode, useEffect, useContext } from "react";
 import { PostInterface, PostContextProps } from "../types";
+import { AuthContext } from "./AuthContext";
 
 export const PostContext = createContext<PostContextProps | null>(null)
 
@@ -10,6 +11,7 @@ interface PostProviderProps {
 export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => { 
 
 
+  const currentUser = useContext(AuthContext)?.user;
   const [posts, setPosts] = useState<PostInterface[]>([]);
   const [reposts, setReposts] = useState<PostInterface[]>([]);
   const [page, setPage] = useState(1);
@@ -91,6 +93,13 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
       }
     }
   
+  
+  useEffect(() => {
+    
+     setReposts(currentUser?.repostedPosts || []);
+
+  }, [currentUser?.repostedPosts])
+
 
 
     return (
