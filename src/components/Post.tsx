@@ -45,7 +45,9 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike }) => {
 <div className='grid grid-cols-7 px-5 py-5 max-w-lg '>
 
     <Link to={`/${post.author.username}`} className="col-span-1 ">
-          <img src={post.author.profilePic} className='rounded-full' alt="User Avatar" width={36} />
+          <img src={post.author.profilePic}
+            className="rounded-full w-9 h-9 object-cover" 
+            alt="User Avatar" />
     </Link>
 
 
