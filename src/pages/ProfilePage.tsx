@@ -13,10 +13,9 @@ export const ProfilePage:React.FC = () => {
     const [activeTab, setActiveTab] = useState('Threads');
     const navigate = useNavigate();
     const followContext = useContext(FollowContext);
-    const postContext = useContext(PostContext)
-    const [reposts, setReposts] = useState<PostInterface[]>([])
     const [posts, setPosts] = useState<PostInterface[]>([])
     const [pfp, setPfp] = useState('');
+    const { reposts, setReposts, likePost, removeLike } = useContext(PostContext) || {};
 
 
     useEffect(() => {
@@ -27,10 +26,6 @@ export const ProfilePage:React.FC = () => {
        user?.profilePic && setPfp(user?.profilePic)
 
     }, [user?.profilePic])
-    useEffect(() => {
-       if (user?.repostedPosts) setReposts(user?.repostedPosts);
-
-    }, [user?.repostedPosts]);
 
 
 
@@ -44,48 +39,57 @@ export const ProfilePage:React.FC = () => {
 
 
     const handleLike = (post: PostInterface) => {
-
         if (user && !post?.likes.includes(user._id)) {
-          postContext?.likePost(post?._id ?? '', user?._id ?? '');
+            if (likePost) {
+                likePost(post?._id ?? '', user?._id ?? '');
+            }
     
-          setPosts(prevPosts =>
-            prevPosts.map(p =>
-                p._id === post._id
-                    ? { ...p, likes: [...p.likes, user._id] }
-                    : p
-            )
-        );
-        
-        // Update local state for reposts
-        setReposts(prevReposts =>
-            prevReposts.map(p =>
-                p._id === post._id
-                    ? { ...p, likes: [...p.likes, user._id] }
-                    : p
-            )
-        );
-            
-            
+            if (setPosts) {
+                setPosts((prevPosts: PostInterface[]) =>
+                    prevPosts.map(p =>
+                        p._id === post._id
+                            ? { ...p, likes: [...p.likes, user._id] }
+                            : p
+                    )
+                );
+            }
+    
+            // Update local state for reposts, if needed
+            if (setReposts) {
+                setReposts((prevReposts: PostInterface[]) =>
+                    prevReposts.map(p =>
+                        p._id === post._id
+                            ? { ...p, likes: [...p.likes, user._id] }
+                            : p
+                    )
+                );
+            }
+    
         } else if (user?._id) {
-          postContext?.removeLike(post?._id ?? '', user?._id ?? '');
-          
-          setPosts(prevPosts =>
-            prevPosts.map(p =>
-                p._id === post._id
-                    ? { ...p, likes: p.likes.filter(id => id !== user._id) }
-                    : p
-            )
-        );
-        
-        // Update local state for reposts
-        setReposts(prevReposts =>
-            prevReposts.map(p =>
-                p._id === post._id
-                    ? { ...p, likes: p.likes.filter(id => id !== user._id) }
-                    : p
-            )
-        );
-            
+            if (removeLike) {
+                removeLike(post?._id ?? '', user?._id ?? '');
+            }
+    
+            if (setPosts) {
+                setPosts((prevPosts: PostInterface[]) =>
+                    prevPosts.map(p =>
+                        p._id === post._id
+                            ? { ...p, likes: p.likes.filter(id => id !== user._id) }
+                            : p
+                    )
+                );
+            }
+    
+            // Update local state for reposts, if needed
+            if (setReposts) {
+                setReposts((prevReposts: PostInterface[]) =>
+                    prevReposts.map(p =>
+                        p._id === post._id
+                            ? { ...p, likes: p.likes.filter(id => id !== user._id) }
+                            : p
+                    )
+                );
+            }
         }
     }
 
@@ -144,7 +148,7 @@ export const ProfilePage:React.FC = () => {
                      {/* image section */}
                     <div className='rounded-full'>
                         <div className='relative'>
-                        <img  src={pfp} className='object-fill rounded-full max-w-[84px]' alt={user?.name} />
+                        <img  src={pfp} className="rounded-full w-20 h-20 object-cover"  alt={user?.name} />
                             <div className='w-6 h-6 absolute right-0 bottom-0 bg-blue-400 flex justify-center items-center rounded-full'>
                             <input 
                                 type='file' 
@@ -199,7 +203,7 @@ export const ProfilePage:React.FC = () => {
                     )
                 })
                 ) : (
-                    (reposts.map((post) => (
+                    (reposts?.map((post) => (
                         <Post key={post._id} post={post} onLike={() =>  handleLike(post)} />
                     ))
                     )  
