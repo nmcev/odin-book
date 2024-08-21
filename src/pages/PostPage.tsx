@@ -122,7 +122,7 @@ export const PostPage: React.FC = () => {
                     }
                     <div className='flex flex-col gap-4 divide-y-[1.5px]'>
                         {reversedComments.map((comment) => (
-                        <Comment comment={comment} />
+                        <Comment key={comment._id} comment={comment} />
                     ))}
                         </div>
                 </div>
