@@ -2,6 +2,7 @@ export interface IconProps {
     w?: number,
     h?: number,
     liked?: boolean
+    reposted?: boolean,
 }
 export interface NavItemProps {
     children: React.ReactNode,

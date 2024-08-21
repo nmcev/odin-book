@@ -23,8 +23,12 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike }) => {
   const [openedDialog, setOpenDialog] = useState(false);
   const repost = useContext(PostContext)?.repost
 
-  const currentUserId  = useContext(AuthContext)?.user?._id
-  const [liked, setLiked] = useState<boolean>(post.likes.includes(currentUserId?? ''));
+  const currentUser = useContext(AuthContext)?.user 
+  const currentUserId = currentUser?._id
+  
+  const [liked, setLiked] = useState<boolean>(post.likes.includes(currentUserId ?? ''));
+  const [reposted, setReposted] = useState<boolean>(currentUser?.repostedPosts?.some(repostedPost => repostedPost._id === post._id) ?? false);
+
   const navigate = useNavigate();
     const handleClick = () => {
       setIsBouncing(true);
@@ -37,8 +41,11 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike }) => {
     };
   
     useEffect(() => {
-      setLiked(post.likes.includes(currentUserId?? ''));
-    }, [ currentUserId, post.likes]);
+      setLiked(post.likes.includes(currentUserId ?? ''));
+      setReposted(currentUser?.repostedPosts?.some(repostedPost => repostedPost._id === post._id) ?? false);
+  }, [currentUserId, post.likes, post._id, currentUser?.repostedPosts, ]);
+
+  
     return (
     
 
@@ -119,8 +126,13 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike }) => {
             }
 
               
-            <div className='flex gap-1 items-center' onClick={async() => repost && await repost(post._id)}>
-            <RepostIcon />
+            <div className='flex gap-1 items-center' onClick={async () => {
+              if (repost) {
+                setReposted(prev => !prev);
+                await repost(post._id);
+              }
+     }}>
+            <RepostIcon reposted={reposted} />
             </div>
 
 
