@@ -1,17 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { User } from '../types';
+import { PostInterface, User } from '../types';
 import { Tabs } from '../components/Tabs';
 import { Post } from '../components/Post';
 import { AuthContext } from '../contexts/AuthContext';
+import { PostContext } from '../contexts/PostContext';
 export const UserPage: React.FC = () => {
     const { username } = useParams();
 
     const [user, setUser] = useState<User>();
-    const [followers, setFollowers ] = useState<User[]>()
+    const [followers, setFollowers] = useState<User[]>()
     
     const authContext = useContext(AuthContext);
 
+    const { setReposts, likePost, removeLike, setPosts } = useContext(PostContext) || {}
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('Threads');
 
@@ -65,6 +67,63 @@ export const UserPage: React.FC = () => {
       const isFollowing = () => {
         return followers?.some(follower => follower._id === authContext?.user?._id);
       }
+    
+      const handleLike = (post: PostInterface) => {
+        if (user && !post?.likes.includes(user._id)) {
+            if (likePost) {
+                likePost(post?._id ?? '', user?._id ?? '');
+            }
+    
+            if (setPosts) {
+                setPosts((prevPosts: PostInterface[]) =>
+                    prevPosts.map(p =>
+                        p._id === post._id
+                            ? { ...p, likes: [...p.likes, user._id] }
+                            : p
+                    )
+                );
+            }
+    
+            // Update local state for reposts, if needed
+            if (setReposts) {
+                setReposts((prevReposts: PostInterface[]) =>
+                    prevReposts.map(p =>
+                        p._id === post._id
+                            ? { ...p, likes: [...p.likes, user._id] }
+                            : p
+                    )
+                );
+            }
+    
+        } else if (user?._id) {
+            if (removeLike) {
+                removeLike(post?._id ?? '', user?._id ?? '');
+            }
+    
+            if (setPosts) {
+                setPosts((prevPosts: PostInterface[]) =>
+                    prevPosts.map(p =>
+                        p._id === post._id
+                            ? { ...p, likes: p.likes.filter(id => id !== user._id) }
+                            : p
+                    )
+                );
+            }
+    
+            // Update local state for reposts, if needed
+            if (setReposts) {
+                setReposts((prevReposts: PostInterface[]) =>
+                    prevReposts.map(p =>
+                        p._id === post._id
+                            ? { ...p, likes: p.likes.filter(id => id !== user._id) }
+                            : p
+                    )
+                );
+            }
+        }
+    }
+
+
     
   return (
     <div className="min-h-screen mt-24  mx-auto flex  flex-col  gap-8 max-w-2xl">
@@ -124,13 +183,13 @@ export const UserPage: React.FC = () => {
         
         {activeTab === 'Threads' ? (user?.posts?.map((post) => {
             return (
-                <Post key={post._id} post={post} />
+                <Post key={post._id} post={post} onLike={() =>  handleLike(post)} />
 
             )
         })
         ) : (
             (user?.repostedPosts?.map((post) => (
-                <Post key={post._id} post={post} />
+                <Post key={post._id} post={post} onLike={() =>  handleLike(post)}/>
             ))
             )  
         )
