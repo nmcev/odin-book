@@ -13,7 +13,9 @@ export const UserPage: React.FC = () => {
     
     const authContext = useContext(AuthContext);
 
-    const { setReposts, likePost, removeLike, setPosts } = useContext(PostContext) || {}
+    const {likePost, removeLike } = useContext(PostContext) || {}
+    const [posts, setPosts] = useState<PostInterface[]>([]);
+    const [reposts, setReposts] = useState<PostInterface[]>([]);
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('Threads');
 
@@ -23,7 +25,9 @@ export const UserPage: React.FC = () => {
         const data: User = await res.json();
 
       setFollowers(data.followers)
-      setUser(data)
+        setUser(data)
+        setPosts(data.posts || []); 
+        setReposts(data.repostedPosts || []);
     }
 
     const handleFollowersPage = (username: string) => {
@@ -68,58 +72,55 @@ export const UserPage: React.FC = () => {
         return followers?.some(follower => follower._id === authContext?.user?._id);
       }
     
-      const handleLike = (post: PostInterface) => {
-        if (user && !post?.likes.includes(user._id)) {
+    const handleLike = (post: PostInterface) => {
+        const currentUserId = authContext?.user?._id
+        
+        if (currentUserId && !post?.likes.includes(currentUserId)) {
             if (likePost) {
                 likePost(post?._id ?? '', user?._id ?? '');
             }
+
+        setPosts(prevPosts =>
+            prevPosts.map(p =>
+                p._id === post._id
+                    ? { ...p, likes: [...p.likes, currentUserId] }
+                    : p
+            )
+        );
+
+        setReposts(prevPosts =>
+            prevPosts.map(p =>
+                p._id === post._id
+                    ? { ...p, likes: [...p.likes, currentUserId] }
+                    : p
+            )
+        );
+            
     
-            if (setPosts) {
-                setPosts((prevPosts: PostInterface[]) =>
-                    prevPosts.map(p =>
-                        p._id === post._id
-                            ? { ...p, likes: [...p.likes, user._id] }
-                            : p
-                    )
-                );
-            }
     
-            // Update local state for reposts, if needed
-            if (setReposts) {
-                setReposts((prevReposts: PostInterface[]) =>
-                    prevReposts.map(p =>
-                        p._id === post._id
-                            ? { ...p, likes: [...p.likes, user._id] }
-                            : p
-                    )
-                );
-            }
-    
-        } else if (user?._id) {
+        } else if (currentUserId && post?.likes.includes(currentUserId ?? '')) {
             if (removeLike) {
                 removeLike(post?._id ?? '', user?._id ?? '');
             }
     
-            if (setPosts) {
-                setPosts((prevPosts: PostInterface[]) =>
-                    prevPosts.map(p =>
-                        p._id === post._id
-                            ? { ...p, likes: p.likes.filter(id => id !== user._id) }
-                            : p
-                    )
-                );
-            }
-    
-            // Update local state for reposts, if needed
-            if (setReposts) {
-                setReposts((prevReposts: PostInterface[]) =>
-                    prevReposts.map(p =>
-                        p._id === post._id
-                            ? { ...p, likes: p.likes.filter(id => id !== user._id) }
-                            : p
-                    )
-                );
-            }
+
+
+            setPosts(prevPosts =>
+                prevPosts.map(p =>
+                    p._id === post._id
+                        ? { ...p, likes: p.likes.filter(id => id !== currentUserId) }
+                        : p
+                )
+            );
+
+
+            setReposts(prevPosts =>
+                prevPosts.map(p =>
+                    p._id === post._id
+                        ? { ...p, likes: p.likes.filter(id => id !== currentUserId) }
+                        : p
+                )
+            );
         }
     }
 
@@ -181,14 +182,14 @@ export const UserPage: React.FC = () => {
     <div className=" flex items-center flex-col divide-y-[1.5px] gap-2">
 
         
-        {activeTab === 'Threads' ? (user?.posts?.map((post) => {
+        {activeTab === 'Threads' ? (posts?.map((post) => {
             return (
                 <Post key={post._id} post={post} onLike={() =>  handleLike(post)} />
 
             )
         })
         ) : (
-            (user?.repostedPosts?.map((post) => (
+            (reposts?.map((post) => (
                 <Post key={post._id} post={post} onLike={() =>  handleLike(post)}/>
             ))
             )  
