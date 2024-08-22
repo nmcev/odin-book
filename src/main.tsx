@@ -14,6 +14,7 @@ import { PostPage } from './pages/PostPage.tsx'
 import SearchComponent from './pages/SearchComponent.tsx'
 import { CreatePostPage } from './pages/CreatePostPage.tsx'
 import { ProtectedRoute } from './components/ProtectedRoute.tsx'
+import Notifications from './components/Notifications.tsx'
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
       }
       , {
         path: '/notifications',
-        element: <h1>search</h1>
+        element: <Notifications />
       },
       {
         path: '/profile',
