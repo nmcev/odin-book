@@ -119,7 +119,7 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
       setReposts((prevPosts) => {
         const postExists = prevPosts?.some(post => post._id === repostedPost._id);
     
-        return postExists ? prevPosts : [...prevPosts , repostedPost]
+        return postExists ? prevPosts : [repostedPost, ...prevPosts]
     });
     }
   } 
