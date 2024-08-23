@@ -40,12 +40,7 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
       setLiked(prev => !prev); 
     };
   
-    useEffect(() => {
-      setLiked(post.likes.includes(currentUserId ?? ''));
-      setReposted(currentUser?.repostedPosts?.some(repostedPost => repostedPost._id === post._id) ?? false);
-  }, [currentUserId, post.likes, post._id, currentUser?.repostedPosts, ]);
 
-  
     return (
     
 
