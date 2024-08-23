@@ -44,9 +44,9 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
     return (
     
 
-<div className='grid grid-cols-7 px-5 py-5 max-w-lg '>
+<div className='flex px-5 py-5 max-w-lg '>
 
-    <Link to={`/${post.author.username}`} className="col-span-1 ">
+    <Link to={`/${post.author.username}`} className="m-2  ">
           <img src={post.author.profilePic}
             className="rounded-full w-9 h-9 object-cover" 
             alt="User Avatar" />
@@ -54,7 +54,7 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
 
 
 
-        <div className="col-span-6 space-y-2">
+        <div className="flex-1 space-y-2">
 
       
         <div className=' flex gap-2 items-center justify-between '>
