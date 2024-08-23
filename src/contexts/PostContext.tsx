@@ -1,5 +1,5 @@
 import React, { createContext, useState, ReactNode, useEffect, useContext } from "react";
-import { PostInterface, PostContextProps } from "../types";
+import { PostInterface, PostContextProps, NotificationType } from "../types";
 import { AuthContext } from "./AuthContext";
 
 export const PostContext = createContext<PostContextProps | null>(null)
@@ -7,7 +7,8 @@ export const PostContext = createContext<PostContextProps | null>(null)
 interface PostProviderProps {
     children: ReactNode;
 }
-  
+
+
 export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => { 
 
 
@@ -18,6 +19,7 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<unknown>(null);
   const [hasMore, setHasMore] = useState(true);
+  const [notifications, setNotifications] = useState<NotificationType[]>([]);
 
   const fetchPosts = async (page: number, isLoggedIn: boolean) => {
     setLoading(true);
@@ -123,8 +125,27 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
   } 
 
 
+
+  useEffect(() => {
+      const fetchNotifications = async () => {
+          try {
+              const res = await fetch('http://localhost:3000/api/notifications', {
+                  credentials: 'include'
+              })
+
+              const data = await res.json();
+              setNotifications(data || []);
+          } catch (err) {
+              console.error(err);
+          }
+      };
+
+      fetchNotifications();
+  }, []);
+
+
     return (
-        <PostContext.Provider value={{ posts, fetchPosts, loading, error, hasMore, page, setPage, likePost, removeLike, setPosts, setReposts, reposts, repost }}>
+        <PostContext.Provider value={{ posts, fetchPosts, loading, error, hasMore, page, setPage, likePost, removeLike, setPosts, setReposts, reposts, repost, notifications }}>
         {children}
       </PostContext.Provider>
     )
