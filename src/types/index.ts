@@ -30,6 +30,7 @@ export interface PostProps {
     post: PostInterface
     page?: Page,
     onLike?: () => void;
+    edit?: boolean;
 }
 
 export enum Page {

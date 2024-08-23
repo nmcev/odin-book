@@ -14,7 +14,7 @@ import { PostContext } from '../contexts/PostContext'
 
 
 
-export const Post: React.FC<PostProps> = ({ post, page, onLike }) => {
+export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
 
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -73,8 +73,10 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike }) => {
 
           </div>
           
-            <div onClick={handleClick} className={clsx('cursor-pointer hover:bg-[rgba(219,219,219,0.41)] p-2 rounded-full', {'bounce' : isBouncing})}>
-              <DotsIcons />
+            <div onClick={handleClick} className={clsx('cursor-pointer hover:bg-[rgba(219,219,219,0.41)] p-2 rounded-full', { 'bounce': isBouncing })}>
+              { edit && 
+                <DotsIcons />
+              }
             </div>
         </div>
 

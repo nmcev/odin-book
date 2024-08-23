@@ -198,7 +198,7 @@ export const ProfilePage:React.FC = () => {
                 
                 {activeTab === 'Threads' ? (posts.map((post) => {
                     return (
-                        <Post key={post._id} post={post} onLike={() => handleLike(post)} />
+                        <Post key={post._id} post={post} onLike={() => handleLike(post)} edit={true} />
 
                     )
                 })
