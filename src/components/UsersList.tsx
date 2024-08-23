@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { AuthContext } from '../contexts/AuthContext';
 import { FollowContext } from '../contexts/FollowContext';
 import { User } from '../types';
+import { Link } from 'react-router-dom';
 
 interface UsersListProps {
   followers: User[] | undefined;
@@ -48,14 +49,14 @@ export const UsersList: React.FC<UsersListProps> = ({ followers }) => {
         <>
       {followers?.map((follower) => (
         <div key={follower._id} className="flex items-center justify-between w-full max-w-xl p-4 ">
-          <div className="flex items-center gap-4 flex-1">
+          <Link to={`/${follower.username}`} className="flex items-center gap-4 flex-1">
             <img
               src={follower.profilePic}
               alt={follower.username}
               className="w-16 h-16 rounded-full object-cover border border-gray-300"
             />
             <h2 className="text-lg font-semibold text-gray-800">{follower.username}</h2>
-          </div>
+          </Link>
     
             { currentUser &&currentUser?._id !== follower._id && (
                     <button
