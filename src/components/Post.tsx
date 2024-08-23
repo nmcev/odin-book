@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useContext} from 'react'
 import { LikeIcon } from '../assets/icons/Post/LikeIcon'
 import { CommentIcon } from '../assets/icons/Post/CommentIcon'
 import { RepostIcon } from '../assets/icons/Post/RepostIcon'
