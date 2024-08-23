@@ -23,6 +23,7 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
   const [openedDialog, setOpenDialog] = useState(false);
   const {repost, reposts, unrepost} = useContext(PostContext) || {}
 
+  const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const currentUser = useContext(AuthContext)?.user 
   const currentUserId = currentUser?._id
   
@@ -41,6 +42,9 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
     };
   
 
+  const toggleDropdown = () => {
+    setIsDropdownVisible(!isDropdownVisible)
+  }
     return (
     
 
@@ -69,10 +73,16 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
           </div>
           
             <div onClick={handleClick} className={clsx('cursor-pointer hover:bg-[rgba(219,219,219,0.41)] p-2 rounded-full', { 'bounce': isBouncing })}>
-              { edit && 
-                <DotsIcons />
-              }
+              {edit && (
+                <>
+                   <div onClick={toggleDropdown}>
+                        <DotsIcons />
+                    </div>
+                </>
+              )}
             </div>
+     
+ 
         </div>
 
 
@@ -141,6 +151,18 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
         </div>
 
         </div>
+        {isDropdownVisible &&
+                (
+              <>
+                <div className='relative inline-block z-10 mt-8 max-w-sm'>
+                  <Link to={'/edit-post'} className="block w-full rounded-lg shadow-md bg-white p-4 text-red-500 z-10">
+                      Edit Post
+                  </Link>
+                  </div>
+
+                </>
+
+                )} 
       </div>
 
 
