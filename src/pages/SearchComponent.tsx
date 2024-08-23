@@ -53,7 +53,7 @@ const SearchComponent: React.FC = () => {
                     results.map((user, index) => (
                         <div key={index} className="border p-2 mt-2 flex  gap-2" onClick={() => navigate(`/${user.username}`) }>
                             <div className='max-w-20'>
-                                <img src={user.profilePic} alt={user.name} className='rounded-full' />
+                                <img src={user.profilePic} alt={user.name} className='rounded-full w-14 h-14 object-cover' />
                             </div>
 
                             <div className='pt-4'>

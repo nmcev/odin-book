@@ -143,7 +143,7 @@ export const UserPage: React.FC = () => {
 
              {/* image section */}
              <div className='rounded-full'>
-                 <img  src={user?.profilePic || ''} className='object-fill rounded-full max-w-[84px]' alt={user?.name} />
+                 <img  src={user?.profilePic || ''} className='object-cover rounded-full h-20 w-20' alt={user?.name} />
              </div>
         </div>
         
