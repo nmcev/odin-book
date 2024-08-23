@@ -51,6 +51,7 @@ export interface PostContextProps {
     reposts: PostInterface[];
     setReposts: React.Dispatch<React.SetStateAction<PostInterface[]>>;
     repost: (postId: string) => Promise<void>; 
+    notifications: NotificationType[];
 
 }
   
@@ -72,4 +73,14 @@ export interface CommentInterface {
     author: User;
     content: string
     createdAt: Date;
+}
+
+export interface NotificationType {
+    user: User,
+    _id: string,
+    type: string,
+    post: PostInterface,
+    recipient: User,
+    createdAt: Date,
+    isRead: boolean
 }
