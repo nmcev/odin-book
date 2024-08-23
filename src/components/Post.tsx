@@ -4,7 +4,7 @@ import { CommentIcon } from '../assets/icons/Post/CommentIcon'
 import { RepostIcon } from '../assets/icons/Post/RepostIcon'
 import { DotsIcons } from '../assets/icons/Post/DotsIcons'
 import clsx from 'clsx'
-import { Page, PostProps } from '../types'
+import { Page, PostProps, PostInterface } from '../types'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
 import moment from 'moment'
@@ -21,13 +21,13 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
   const [isBouncing, setIsBouncing] = useState(false);
 
   const [openedDialog, setOpenDialog] = useState(false);
-  const repost = useContext(PostContext)?.repost
+  const {repost, reposts, unrepost} = useContext(PostContext) || {}
 
   const currentUser = useContext(AuthContext)?.user 
   const currentUserId = currentUser?._id
   
   const [liked, setLiked] = useState<boolean>(post.likes.includes(currentUserId ?? ''));
-  const [reposted, setReposted] = useState<boolean>(currentUser?.repostedPosts?.some(repostedPost => repostedPost._id === post._id) ?? false);
+  const [reposted, setReposted] = useState<boolean>(currentUser?.repostedPosts?.some(repostedPost => repostedPost._id === post._id) ?? true);
 
   const navigate = useNavigate();
     const handleClick = () => {
@@ -129,9 +129,14 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
 
               
             <div className='flex gap-1 items-center' onClick={async () => {
-              if (repost) {
-                setReposted(prev => !prev);
+              if (  repost && !reposts?.some((repostedPost: PostInterface)  => repostedPost._id === post._id)) {
+                setReposted(true); 
                 await repost(post._id);
+                
+              } else if (unrepost) {
+                setReposted(false); 
+
+                await unrepost(post._id)
               }
      }}>
             <RepostIcon reposted={reposted} />
