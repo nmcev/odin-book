@@ -125,6 +125,27 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
   } 
 
 
+  const unrepost = async(postId: string) => {
+
+      
+    const res = await fetch(`http://localhost:3000/api/unrepost/${postId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include'
+    })
+
+    if (res.ok) {
+
+      setReposts((prevPosts) => prevPosts.filter(post => post._id !== postId));
+
+      
+    }
+
+  }
+
+
 
   useEffect(() => {
       const fetchNotifications = async () => {
@@ -145,7 +166,7 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
 
 
     return (
-        <PostContext.Provider value={{ posts, fetchPosts, loading, error, hasMore, page, setPage, likePost, removeLike, setPosts, setReposts, reposts, repost, notifications }}>
+        <PostContext.Provider value={{ posts, fetchPosts, loading, error, hasMore, page, setPage, likePost, removeLike, setPosts, setReposts, reposts, repost, notifications, unrepost }}>
         {children}
       </PostContext.Provider>
     )
