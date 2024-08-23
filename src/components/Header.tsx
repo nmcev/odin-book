@@ -17,7 +17,7 @@ export const Header: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-      <header className='flex w-full gap-72 justify-center py-2 fixed backdrop:blur-xl top-0 bg-[rgba(255,255,255,0.85)] dark:backdrop:opacity-50 dark:bg-[#10101094]'>
+      <header className='flex w-full gap-72 justify-center py-2 fixed backdrop:blur-xl top-0 bg-[rgba(255,255,255,0.85)] dark:backdrop:opacity-50 dark:bg-[#10101094] z-50'>
         
           {/* logo section */}
         <div className=' rounded-lg px-8 py-4 grid items-center'>
