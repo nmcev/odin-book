@@ -17,17 +17,28 @@ export const UserPage: React.FC = () => {
     const [posts, setPosts] = useState<PostInterface[]>([]);
     const [reposts, setReposts] = useState<PostInterface[]>([]);
     const navigate = useNavigate();
+    const [error, setError ] = useState(false)
     const [activeTab, setActiveTab] = useState('Threads');
 
-    const fetchAUser =  async() => {
+    const fetchAUser = async () => {
     
-        const res = await fetch(`http://localhost:3000/api/users/${username}`)
-        const data: User = await res.json();
+        try {
+            const res = await fetch(`http://localhost:3000/api/users/${username}`)
+            if (!res.ok) {
+                throw new Error('User not found');
+    
+            }
+            const data: User = await res.json();
+    
+          setFollowers(data.followers)
+            setUser(data)
+            setPosts(data.posts || []); 
+            setReposts(data.repostedPosts || []);
 
-      setFollowers(data.followers)
-        setUser(data)
-        setPosts(data.posts || []); 
-        setReposts(data.repostedPosts || []);
+        } catch (error) {
+            setError(true)
+        }
+
     }
 
     const handleFollowersPage = (username: string) => {
@@ -125,6 +136,16 @@ export const UserPage: React.FC = () => {
     }
 
 
+
+    if (error) {
+        return ( 
+            <div className='min-h-screen  flex items-center justify-center'>
+                <h1 className='font-extrabold font-sans text-xl dark:text-white '>
+                  NOT FOUND! 404
+                </h1>
+            </div>
+        )
+    }
     
   return (
     <div className="min-h-screen mt-24  mx-auto flex  flex-col  gap-8 max-w-2xl">
