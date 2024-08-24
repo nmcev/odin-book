@@ -15,6 +15,7 @@ import SearchComponent from './pages/SearchComponent.tsx'
 import { CreatePostPage } from './pages/CreatePostPage.tsx'
 import { ProtectedRoute } from './components/ProtectedRoute.tsx'
 import Notifications from './components/Notifications.tsx'
+import { EditPostForm } from './components/EditPostForm.tsx'
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
           <ProtectedRoute>
             <FollowingPage />
           </ProtectedRoute>
+      },
+      {
+        path: '/edit-post/:postId',
+        element: <EditPostForm />
       },
       {
         path: '/:username',
