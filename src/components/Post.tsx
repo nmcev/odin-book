@@ -155,7 +155,7 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
                 (
               <>
                 <div className='relative inline-block z-10 mt-8 max-w-sm'>
-                  <Link to={'/edit-post'} className="block w-full rounded-lg shadow-md bg-white p-4 text-red-500 z-10">
+                  <Link to={`/edit-post/${post._id}`} className="block w-full rounded-lg shadow-md bg-white p-4 text-red-500 z-10">
                       Edit Post
                   </Link>
                   </div>
