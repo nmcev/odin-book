@@ -11,26 +11,27 @@ const Notifications: React.FC = () => {
     return (
          <div className="min-h-screen my-24 flex items-center flex-col divide-y-[1.5px] ">
              {notifications?.map((notification) => (
-                 <div key={notification._id} className="w-full max-w-md p-4 my-2 bg-white flex items-center space-x-48">
+                 <div key={notification._id} className="w-full max-w-2xl p-4 my-2 bg-white flex items-start justify-between">
                      <div className='flex gap-2 items-center'>
                      <img
                          src={notification.user.profilePic}
                          alt={`${notification.user.username}'s profile`}
                          className="w-12 h-12 rounded-full object-cover"
                      />
-                     <p className="text-gray-800 text-sm">
+                     <div className="text-gray-800 text-sm  w-full max-w-2xl flex-1">
                          <span className="font-bold">
                              <Link to={`/${notification.user.username}`}>
                                 {notification.user.username} &nbsp;
                              </Link>
                          </span>
-                         {getNotificationMessage(notification.type)}
-                     </p>
+                         {getNotificationMessage(notification.type)} {''} <span className='text-xs inline-block  text-gray-600'>{ moment(notification.createdAt).fromNow()}</span>
+
+                     </div>
 
                      </div>
                      
                          
-                     <div className='flex flex-col max-w-72 w-full gap-2'>
+                     <div className='flex flex-col max-w-72 w-full space-x-4'>
                     {['like', 'repost'].includes(notification.type) && (
                         <Link to={`/${notification.recipient.username}/${notification.post._id}`}>
                             <img
@@ -42,7 +43,6 @@ const Notifications: React.FC = () => {
                     )}
 
                   
-                     <span className='text-xs text-gray-600'>{ moment(notification.createdAt).fromNow()}</span>
                      </div>
                  </div>
              ))}
