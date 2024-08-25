@@ -17,6 +17,7 @@ interface AuthContextProps {
     user: User | null,
     isLoggedIn: boolean;
     loading: boolean;
+    loginError: string
 }
 
 interface AuthContextProviderProps {
@@ -33,6 +34,7 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) 
     const [user, setUser] = useState<User | null>(null);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean | false>(false);
     const [loading, setLoading] = useState(true);
+    const [loginError, setLoginError] = useState('')
 
     const login = async (username: string, password: string) => {
         try {
@@ -46,7 +48,9 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) 
             });
 
             if (!res.ok) {
-                throw new Error('Network response was not ok');
+                const error = await res.json();
+                setLoginError(error.message);
+                return;
             }
 
             const data = await res.json();
@@ -150,7 +154,7 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) 
     }, []);
 
     return ( 
-        <AuthContext.Provider value={{ login, isLoggedIn, user, loading , logout, register, setUserCredentials, credentials}}>
+        <AuthContext.Provider value={{ login, isLoggedIn, user, loading , logout, register, setUserCredentials, credentials, loginError}}>
             {loading ? <p>Loading...</p> : children} 
         </AuthContext.Provider>
     );
