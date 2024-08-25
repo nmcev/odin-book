@@ -2,16 +2,65 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { Navigate, useNavigate } from 'react-router-dom';
 
+
+type ErrorState = {
+    username?: string;
+    pw?: string;
+};
 export const SignupPage: React.FC = () => {
     const [pw, setPw] = useState('');
     const [username, setUsername] = useState('');
     const authContext = useContext(AuthContext)
     const navigate = useNavigate();
+    const [errors, setErrors] = useState({username: '', pw: ''})
 
+
+    const checkUsername = async (username: string): Promise<boolean> => {
+        try {
+            const res = await fetch(`http://localhost:3000/api/users/${username}`);
+            if (res.ok) {
+                const user = await res.json();
+                return !!user; 
+            } else {
+                throw new Error('Failed to check username');
+            }
+        } catch (error) {
+            console.error('Error checking username:', error);
+            return false;
+        }
+    };
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        authContext?.setUserCredentials({username, password: pw})
-        navigate('/profile-setup')
+        
+        const errors: ErrorState = {};
+
+        if (username.length < 3) {
+            errors.username = 'Username must be at least 3 characters';
+        } else {
+            const isUsernameTaken = await checkUsername(username);
+            if (isUsernameTaken) {
+                errors.username = 'Username already taken';
+            }
+        }
+        
+        if (pw.length < 6) {
+            errors.pw = 'Password must be at least 6 characters';
+        }
+
+        checkUsername(username)
+        if (Object.keys(errors).length > 0 ) {
+            setErrors(errors);
+            return;
+        }
+
+        try {
+            authContext?.setUserCredentials({ username, password: pw });
+    
+            navigate('/profile-setup');
+        } catch (error) {
+            console.error('Error setting user credentials:', error);
+        }
+
    
     };
 
@@ -85,6 +134,10 @@ export const SignupPage: React.FC = () => {
                         </button>
                     </div>
                 </form>
+
+                    
+                    {errors && <p className=' text-red-500 text-sm p-2'>{errors.username}</p>}
+                    {errors && <p className=' text-red-500 text-sm p-2'>{errors.pw}</p>}
 
                 <p className="mt-10 text-center text-sm text-gray-500">
                      already have an account?{' '}
