@@ -16,6 +16,8 @@ import { CreatePostPage } from './pages/CreatePostPage.tsx'
 import { ProtectedRoute } from './components/ProtectedRoute.tsx'
 import Notifications from './components/Notifications.tsx'
 import { EditPostForm } from './components/EditPostForm.tsx'
+import { SignupPage } from './pages/SignupPage.tsx'
+import { ProfileSetupPage } from './pages/ProfileSetupPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -77,7 +79,11 @@ const router = createBrowserRouter([
   }
   , {
     path: '/signup',
-    element: <h1>Signup page</h1>
+    element:<SignupPage />
+  },
+  {
+    path: '/profile-setup',
+    element: <ProfileSetupPage />
   }
 ])
 ReactDOM.createRoot(document.getElementById('root')!).render(
