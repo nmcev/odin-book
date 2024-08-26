@@ -8,6 +8,13 @@ const Notifications: React.FC = () => {
 
     const notifications = useContext(PostContext)?.notifications
 
+    if (notifications?.length === 0) {
+        return <>
+                <div className="min-h-screen flex items-center justify-center flex-col divide-y-[1.5px] ">
+                    <p className='text-lg text-gray-700 '>No Notifications</p>
+                </div>
+        </>
+    }
     return (
          <div className="min-h-screen my-24 flex items-center flex-col divide-y-[1.5px] ">
              {notifications?.map((notification) => (
