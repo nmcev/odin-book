@@ -19,7 +19,7 @@ const Notifications: React.FC = () => {
          <div className="min-h-screen my-24 flex items-center flex-col divide-y-[1.5px] ">
              {notifications?.map((notification) => (
                  <div key={notification._id} className="w-full max-w-2xl p-4 my-2  flex items-start justify-between">
-                     <div className='flex gap-2 items-center'>
+                     <div className='flex gap-4 items-center'>
                      <img
                          src={notification.user.profilePic}
                          alt={`${notification.user.username}'s profile`}
@@ -31,7 +31,7 @@ const Notifications: React.FC = () => {
                                 {notification.user.username} &nbsp;
                              </Link>
                          </span>
-                         {getNotificationMessage(notification.type)} {''} <span className='text-xs inline-block  text-gray-600 dark:text-neutral-400'>{ moment(notification.createdAt).fromNow()}</span>
+                         {getNotificationMessage(notification.type)} &nbsp; <span className='text-xs inline-block  text-gray-600 dark:text-neutral-400'>{ moment(notification.createdAt).fromNow()}</span>
 
                      </div>
 
