@@ -18,20 +18,20 @@ const Notifications: React.FC = () => {
     return (
          <div className="min-h-screen my-24 flex items-center flex-col divide-y-[1.5px] ">
              {notifications?.map((notification) => (
-                 <div key={notification._id} className="w-full max-w-2xl p-4 my-2 bg-white flex items-start justify-between">
+                 <div key={notification._id} className="w-full max-w-2xl p-4 my-2  flex items-start justify-between">
                      <div className='flex gap-2 items-center'>
                      <img
                          src={notification.user.profilePic}
                          alt={`${notification.user.username}'s profile`}
                          className="w-12 h-12 rounded-full object-cover"
                      />
-                     <div className="text-gray-800 text-sm  w-full max-w-2xl flex-1">
+                     <div className="text-gray-800 dark:text-neutral-100  text-sm  w-full max-w-2xl flex-1">
                          <span className="font-bold">
                              <Link to={`/${notification.user.username}`}>
                                 {notification.user.username} &nbsp;
                              </Link>
                          </span>
-                         {getNotificationMessage(notification.type)} {''} <span className='text-xs inline-block  text-gray-600'>{ moment(notification.createdAt).fromNow()}</span>
+                         {getNotificationMessage(notification.type)} {''} <span className='text-xs inline-block  text-gray-600 dark:text-neutral-400'>{ moment(notification.createdAt).fromNow()}</span>
 
                      </div>
 
