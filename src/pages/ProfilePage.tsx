@@ -137,7 +137,7 @@ export const ProfilePage:React.FC = () => {
             <div className='flex flex-col gap-1 justify-center'>
 
                 {/* info section */}
-                <div className='flex bg-white flex-1 gap-5 justify-between'>
+                <div className='flex  flex-1 gap-5 justify-between'>
 
                     <div className='flex-1'>
                         <h2 className='text-2xl font-bold'>{user?.name || 'name'}</h2>

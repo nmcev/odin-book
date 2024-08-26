@@ -12,7 +12,7 @@ export const Tabs: React.FC<TabsProps> = ({activeTab, setActiveTab}) => {
             <div
               onClick={() => setActiveTab('Threads')}
               className={clsx('text-[15px] font-semibold cursor-pointer', {
-                'text-black': activeTab === 'Threads', 'text-[#999999]': activeTab === 'Reposts'
+                'text-black dark:text-white': activeTab === 'Threads', 'text-[#999999]': activeTab === 'Reposts'
               })}
             >
               Threads
@@ -22,7 +22,7 @@ export const Tabs: React.FC<TabsProps> = ({activeTab, setActiveTab}) => {
             <div
               onClick={() => setActiveTab('Reposts')}
               className={clsx('text-[15px] font-semibold cursor-pointer', {
-                'text-black': activeTab === 'Reposts', 'text-[#999999]': activeTab === 'Threads'
+                'text-black dark:text-white': activeTab === 'Reposts', 'text-[#999999]': activeTab === 'Threads'
               })}
             >
               Reposts
@@ -32,7 +32,7 @@ export const Tabs: React.FC<TabsProps> = ({activeTab, setActiveTab}) => {
             
         <div
           className={clsx(
-            'absolute bottom-0 h-[1.5px] bg-black transition-all duration-300',
+            'absolute bottom-0 h-[1.5px] bg-black dark:bg-white transition-all duration-300',
             {
               'left-0 w-1/2': activeTab === 'Threads',
               'left-1/2 w-1/2': activeTab === 'Reposts',
