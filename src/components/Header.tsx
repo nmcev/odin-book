@@ -129,7 +129,7 @@ const NavItem: React.FC<NavItemProps> = ({ children, to }) => {
   return (
       <>
         <div 
-            className={clsx('hover:bg-gray-100 rounded-lg px-8 py-5 grid items-center cursor-pointer', {
+            className={clsx('hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg px-8 py-5 grid items-center cursor-pointer', {
             'bounce': isBouncing,
       })}
       
