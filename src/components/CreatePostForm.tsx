@@ -112,7 +112,7 @@ export const CreatePostForm: React.FC = () => {
         )}
           
         <div className="buttons flex">
-          <div className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto dark:text-neutral-100">Cancel</div>
+          <div className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto dark:text-neutral-100" onClick={() =>(navigate('/'))}>Cancel</div>
           <div className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500" onClick={handleSubmitPost}>Post</div>
         </div>
          </div>
