@@ -38,7 +38,7 @@ const Notifications: React.FC = () => {
                      </div>
                      
                          
-                     <div className='flex flex-col max-w-72 w-full space-x-4'>
+                    
                     {['like', 'repost'].includes(notification.type) && (
                         <Link to={`/${notification.recipient.username}/${notification.post._id}`}>
                             <img
@@ -50,7 +50,6 @@ const Notifications: React.FC = () => {
                     )}
 
                   
-                     </div>
                  </div>
              ))}
          </div>
