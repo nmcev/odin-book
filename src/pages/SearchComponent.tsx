@@ -46,12 +46,12 @@ const SearchComponent: React.FC = () => {
                 className="p-2 border rounded-md"
                 aria-label="Search"
             />
-            <div>
+            <div className=' flex flex-col space-y-6 divide-y-[.5px] '>
                 {loading ? (
                     <p>Loading...</p>
                 ) : results.length > 0 ? (
                     results.map((user, index) => (
-                        <div key={index} className="border p-2 mt-2 flex  gap-2" onClick={() => navigate(`/${user.username}`) }>
+                        <div key={index} className="p-2 mt-2 flex  gap-4 cursor-pointer" onClick={() => navigate(`/${user.username}`) }>
                             <div className='max-w-20'>
                                 <img src={user.profilePic} alt={user.name} className='rounded-full w-14 h-14 object-cover' />
                             </div>
