@@ -68,7 +68,7 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
                 {post.author.username}
           </Link>
             
-            <small className='text-[#3a3a3ada]'>{moment(post.createdAt).format('MMMM Do YYYY')}</small>
+            <small className='text-[#3a3a3ada] dark:text-neutral-300'>{moment(post.createdAt).format('MMMM Do YYYY')}</small>
 
           </div>
           
@@ -118,7 +118,7 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
                 <LikeIcon liked={liked} />
 
               </div>
-              <span className=' font-normal select-none  text-[#424242]  text-xs text-start'>{post.likes.length}</span>
+              <span className=' font-normal select-none  text-[#424242] dark:text-neutral-100  text-xs text-start'>{post.likes.length}</span>
             </div>
             { openedDialog && 
                  <Dialog message="You need to log in to do this action." onClose={() => setOpenDialog(false)} />
@@ -128,7 +128,7 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
           {  page !== Page.PostPage &&        
             <Link className='flex gap-1 items-center' to={`/${post.author}/${post._id}`} >
             <CommentIcon />
-              <span className=' font-normal  text-[#424242]  text-xs text-start'>{post.comments.length}</span>
+              <span className=' font-normal  text-[#424242] dark:text-neutral-100 text-xs text-start'>{post.comments.length}</span>
               </Link>
             }
 
