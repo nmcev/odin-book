@@ -48,6 +48,16 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
                     : post
             )
         );
+      } else if (data.type === 'comment') {
+        setPosts(prevPosts => 
+          prevPosts.map(post => post._id === data.postId ? {
+            ...post,
+            comments: [data.comment, ...post.comments]
+
+          } : post
+        )
+        )
+
     }
 };
     eventSource.onerror = function(err) {
