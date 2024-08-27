@@ -40,6 +40,15 @@ export const ProfileSetupPage: React.FC = () => {
 
     };
 
+
+    if (!authContext?.credentials.username && !authContext?.credentials.password) {
+        return (
+            <div className='flex justify-center min-h-screen items-center text-4xl font-extrabold'>
+                Fill the registration page first (:
+            </div>
+        )
+    }
+
     return (
         <div className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
