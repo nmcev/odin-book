@@ -13,7 +13,7 @@ export const Comment: React.FC<CommentProps> = ({ comment }) => {
                 <div>
                     <h2 className="text-[15px] font-bold">{comment.author.username}</h2>
                     <span className="text-xs text-gray-500 block">
-                        {moment(comment.createdAt).format('MMMM Do YYYY')}
+                      {moment(comment.createdAt).fromNow()}
                     </span>
                 </div>
                 <p className="mt-1 text-gray-700 dark:text-white">{comment.content}</p>
