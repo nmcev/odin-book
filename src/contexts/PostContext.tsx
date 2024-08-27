@@ -21,6 +21,45 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
   const [hasMore, setHasMore] = useState(true);
   const [notifications, setNotifications] = useState<NotificationType[]>([]);
 
+
+
+  useEffect(() => {
+    const eventSource = new EventSource('http://localhost:3000/events');
+
+    eventSource.onmessage = function (event) {
+      const data = JSON.parse(event.data);
+      
+      if (data.type === 'new_post') {
+       setPosts(prevPosts => [data.post, ...prevPosts])
+      } else if (data.type === 'like' && data.userId !== currentUser?._id) {
+       setPosts(prevPosts =>
+            prevPosts.map(post =>
+                post._id === data.postId
+                    ? { ...post, likes: [...post.likes, data.userId] }
+                    : post
+            )
+        );
+      }
+      else if (data.type === 'unlike' && data.userId !== currentUser?._id) {
+       setPosts(prevPosts =>
+            prevPosts.map(post =>
+                post._id === data.postId
+                    ? { ...post, likes: post.likes.filter(id => id !== data.userId) }
+                    : post
+            )
+        );
+    }
+};
+    eventSource.onerror = function(err) {
+      console.error('EventSource failed:', err);
+  };
+
+  return () => {
+      eventSource.close();
+  };
+    
+  } , [currentUser?._id])
+  
   const fetchPosts = async (page: number, isLoggedIn: boolean) => {
     setLoading(true);
     setError(null);
