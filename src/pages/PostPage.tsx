@@ -31,6 +31,65 @@ export const PostPage: React.FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [postId]);
 
+
+    useEffect(() => {
+        const eventSource = new EventSource('http://localhost:3000/events');
+    
+        eventSource.onmessage = function (event) {
+            const data = JSON.parse(event.data);
+          
+            if (data.type === 'like' && data.userId !== currentUser?._id) {
+                setPost(prevPost => {
+                    if (prevPost) {
+                        return {
+                            ...prevPost,
+                            likes: [data.userId, ...(prevPost?.likes || [])]
+                        
+                        }
+                    }
+                    return prevPost
+                }
+
+                );
+            }
+            else if (data.type === 'unlike' && data.userId !== currentUser?._id) {
+                setPost(prevPost => {
+                    if (prevPost) {
+                        return {
+                            
+                            ...prevPost,
+                            likes: prevPost?.likes.filter(id => id !== data.userId)
+                            
+                        }
+                    }
+                    return prevPost
+                })
+            }
+            else if (data.type === 'comment') {
+                setPost(prevPost => {
+                    if (prevPost) {
+                        return {
+                            ...prevPost,
+                            comments: [...prevPost?.comments || [], data.comment,]
+                        }
+                    }
+                    return prevPost
+                })
+            }
+        
+    
+        }
+
+        eventSource.onerror = function(err) {
+          console.error('EventSource failed:', err);
+      };
+    
+      return () => {
+          eventSource.close();
+      };
+        
+    }, [currentUser?._id])
+    
     const handleLike = () => {
 
         if (currentUser && !post?.likes.includes(currentUser._id)) {
