@@ -9,6 +9,26 @@ export const HomePage = () => {
   const auth = useContext(AuthContext);
 
 
+  useEffect(() => {
+    const eventSource = new EventSource('http://localhost:3000/events');
+
+    eventSource.onmessage = function (event) {
+      const data = JSON.parse(event.data);
+      
+      if (data.type === 'new_post') {
+        postContext?.setPosts(prevPosts => [data.post, ...prevPosts])
+      }
+    }
+    eventSource.onerror = function(err) {
+      console.error('EventSource failed:', err);
+  };
+
+  return () => {
+      eventSource.close();
+  };
+    
+  } , [postContext])
+
   const handleScroll =  useCallback(() => {
     const isScrollAtBottom = window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight;
 
