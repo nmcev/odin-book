@@ -30,7 +30,10 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
       const data = JSON.parse(event.data);
       
       if (data.type === 'new_post') {
-       setPosts(prevPosts => [data.post, ...prevPosts])
+        if (data.post?.author._id !== currentUser?._id) {
+          setPosts(prevPosts => [data.post, ...prevPosts])
+
+        }
       } else if (data.type === 'like' && data.userId !== currentUser?._id) {
        setPosts(prevPosts =>
             prevPosts.map(post =>
