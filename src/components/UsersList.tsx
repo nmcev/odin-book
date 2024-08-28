@@ -55,7 +55,7 @@ export const UsersList: React.FC<UsersListProps> = ({ followers }) => {
               alt={follower.username}
               className="w-16 h-16 rounded-full object-cover border border-gray-300"
             />
-            <h2 className="text-lg font-semibold text-gray-800">{follower.username}</h2>
+            <h2 className="text-lg font-semibold text-gray-800 dark:text-neutral-100">{follower.username}</h2>
           </Link>
     
             { currentUser &&currentUser?._id !== follower._id && (
