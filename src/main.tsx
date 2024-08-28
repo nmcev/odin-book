@@ -66,7 +66,10 @@ const router = createBrowserRouter([
       },
       {
         path: '/edit-post/:postId',
-        element: <EditPostForm />
+        element:
+        <ProtectedRoute>
+           <EditPostForm />
+        </ProtectedRoute>
       },
       {
         path: '/:username',
