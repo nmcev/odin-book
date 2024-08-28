@@ -5,6 +5,7 @@ import { Tabs } from '../components/Tabs';
 import { Post } from '../components/Post';
 import { AuthContext } from '../contexts/AuthContext';
 import { PostContext } from '../contexts/PostContext';
+import { FollowContext } from '../contexts/FollowContext';
 export const UserPage: React.FC = () => {
     const { username } = useParams();
 
@@ -12,7 +13,10 @@ export const UserPage: React.FC = () => {
     const [followers, setFollowers] = useState<User[]>()
     
     const authContext = useContext(AuthContext);
+    const followContext = useContext(FollowContext);
 
+    const setFollowing = followContext?.setFollowing;
+    const following = followContext?.following;
     const {likePost, removeLike } = useContext(PostContext) || {}
     const [posts, setPosts] = useState<PostInterface[]>([]);
     const [reposts, setReposts] = useState<PostInterface[]>([]);
@@ -77,6 +81,15 @@ export const UserPage: React.FC = () => {
 
             
             });
+
+            if ( isFollowing() && setFollowing && following) {
+                setFollowing(following.filter(user => user._id !== authContext?.user?._id));
+            } else if (setFollowing && following) {
+                setFollowing([...following, user]);
+
+            }
+
+            
         }
     };
       const isFollowing = () => {
