@@ -48,7 +48,7 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
     return (
     
 
-<div className='flex px-5 py-5 max-w-lg '>
+<div className='flex w-full px-5 py-5 max-w-lg '>
 
     <Link to={`/${post.author.username}`} className="m-2  ">
           <img src={post.author.profilePic}
@@ -92,7 +92,7 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
            <>
               
             {!isImageLoaded && (
-              <div className="placeholder" style={{ width: '100%', height: '300px', backgroundColor: '#f0f0f0' }}></div>
+              <div className="placeholder bg-neutral-300 h-72 " ></div>
              )}
             
                 <div className='max-w-lg h-72'>
