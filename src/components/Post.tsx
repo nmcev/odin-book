@@ -134,14 +134,16 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
 
               
             <div className='flex gap-1 items-center' onClick={async () => {
-              if (  repost && !reposts?.some((repostedPost: PostInterface)  => repostedPost._id === post._id)) {
+              if (  currentUserId &&repost && !reposts?.some((repostedPost: PostInterface)  => repostedPost._id === post._id)) {
                 setReposted(true); 
                 await repost(post._id);
                 
-              } else if (unrepost) {
+              } else if ( currentUserId && unrepost) {
                 setReposted(false); 
 
                 await unrepost(post._id)
+              } else {
+                setOpenDialog(true)
               }
      }}>
             <RepostIcon reposted={reposted} />
