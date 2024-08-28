@@ -39,7 +39,10 @@ const router = createBrowserRouter([
       }
       , {
         path: '/notifications',
-        element: <Notifications />
+        element:
+          <ProtectedRoute>
+            <Notifications />
+          </ProtectedRoute>
       },
       {
         path: '/profile',
