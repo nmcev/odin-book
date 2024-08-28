@@ -28,7 +28,7 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
   const currentUserId = currentUser?._id
   
   const [liked, setLiked] = useState<boolean>(post.likes.includes(currentUserId ?? ''));
-  const [reposted, setReposted] = useState<boolean>(currentUser?.repostedPosts?.some(repostedPost => repostedPost._id === post._id) ?? true);
+  const [reposted, setReposted] = useState<boolean>(currentUser?.repostedPosts?.some(repostedPost => repostedPost._id === post._id) ?? false);
 
   const navigate = useNavigate();
     const handleClick = () => {
