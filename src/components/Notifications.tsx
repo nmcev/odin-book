@@ -39,7 +39,7 @@ const Notifications: React.FC = () => {
                      
                          
                     
-                    {['like', 'repost'].includes(notification.type) && (
+                    {['like', 'repost'].includes(notification.type) &&  notification.post.media && (
                         <Link to={`/${notification.recipient.username}/${notification.post._id}`}>
                             <img
                                 className="w-16 h-16 object-cover rounded-md"
