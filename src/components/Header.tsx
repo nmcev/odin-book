@@ -17,7 +17,7 @@ export const Header: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-      <header className='flex w-full gap-72 justify-center py-2 fixed backdrop:blur-xl top-0 bg-[rgba(255,255,255,0.85)] dark:backdrop:opacity-50 dark:bg-[#10101094] z-50'>
+      <header className='sm:flex w-full sm:gap-72 justify-center py-2 fixed backdrop:blur-xl top-0 bg-[rgba(255,255,255,0.85)] dark:backdrop:opacity-50 dark:bg-[#10101094] z-50'>
         
           {/* logo section */}
         <div className=' rounded-lg px-8 py-4 grid items-center'>
@@ -43,7 +43,7 @@ export const Header: React.FC = () => {
             </div>
 
 
-          <nav className='flex'>
+          <nav className='flex max-sm:justify-center'>
 
             <NavItem to='/'>
                   <HomeIcon />
@@ -129,7 +129,7 @@ const NavItem: React.FC<NavItemProps> = ({ children, to }) => {
   return (
       <>
         <div 
-            className={clsx('hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg px-8 py-5 grid items-center cursor-pointer', {
+            className={clsx('hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg sm:px-8 px-6 py-5 grid items-center cursor-pointer', {
             'bounce': isBouncing,
       })}
       
