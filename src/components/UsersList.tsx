@@ -55,7 +55,7 @@ export const UsersList: React.FC<UsersListProps> = ({ followers }) => {
               alt={follower.username}
               className="w-16 h-16 rounded-full object-cover border border-gray-300"
             />
-            <h2 className="text-lg font-semibold text-gray-800 dark:text-neutral-100">{follower.username}</h2>
+            <h2 className="text-lg font-semibold text-gray-800 dark:text-neutral-100 max-sm:text-base">{follower.username}</h2>
           </Link>
     
             { currentUser &&currentUser?._id !== follower._id && (
@@ -68,7 +68,7 @@ export const UsersList: React.FC<UsersListProps> = ({ followers }) => {
                   follow(follower._id)
                     }
                   }}
-                        className={`px-4 py-2 rounded-lg text-white transition-colors ${
+                        className={`px-4 py-2 rounded-lg text-white transition-colors max-sm:text-sm ${
                           isFollowing(follower._id)  ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'
                         }`}
                       >

@@ -28,7 +28,7 @@ export const FollowersPage:  React.FC  = () => {
 
     
     return (
-      <div className="min-h-screen mt-24 flex flex-col items-center divide-y divide-gray-300 gap-4 px-4">
+      <div className="min-h-screen mt-24 max-sm:mt-48 flex flex-col items-center divide-y divide-gray-300 gap-4 px-4">
         { followers && user && <UsersList followers={user.followers}  />}
     </div>
 

@@ -16,7 +16,7 @@ const Notifications: React.FC = () => {
         </>
     }
     return (
-         <div className="min-h-screen my-24 flex items-center flex-col divide-y-[1.5px] ">
+         <div className="min-h-screen my-24 max-sm:mt-48 flex items-center flex-col divide-y-[1.5px] ">
              {notifications?.map((notification) => (
                  <div key={notification._id} className="w-full max-w-2xl p-4 my-2  flex items-start justify-between">
                      <div className='flex gap-4 items-center'>

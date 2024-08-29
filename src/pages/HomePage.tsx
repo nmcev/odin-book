@@ -44,7 +44,7 @@ export const HomePage = () => {
     }
   }
   return (
-    <div className="min-h-screen mt-24 flex items-center flex-col divide-y-[1.5px] gap-2">
+    <div className="min-h-screen sm:mt-24 mt-48 flex items-center flex-col divide-y-[1.5px] gap-2">
       {postContext?.posts.map((post) => (
         <Post key={post._id} post={post} page={Page.IndexPage} onLike={() => handleLike(post)}  />
       ))}

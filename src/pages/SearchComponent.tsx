@@ -33,7 +33,7 @@ const SearchComponent: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen mt-24 mx-auto flex flex-col gap-8 max-w-2xl">
+        <div className="min-h-screen mt-24 max-sm:mt-52 max-sm:mx-6 mx-auto flex flex-col gap-8 max-w-2xl">
             <DebounceInput
                 minLength={1}
                 debounceTimeout={300}
