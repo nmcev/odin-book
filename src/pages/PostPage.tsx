@@ -156,14 +156,14 @@ export const PostPage: React.FC = () => {
     
     return (
         
-        <div className="min-h-screen my-24 flex items-center flex-col divide-y-[1.5px] ">
+        <div className="min-h-screen sm:my-24 my-44 flex items-center flex-col divide-y-[1.5px] ">
             {post ? (
                 <div className='flex flex-col gap-4 '>
                     <Post post={post} page={Page.PostPage} onLike={handleLike} />
 
                     {/* comment input */}
                     {currentUser &&
-                        <div className='w-full max-w-lg'>
+                        <div className='w-full max-w-lg max-sm:mx-8'>
                             <textarea
                                 value={newComment}
                                 onChange={handleCommentChange}
@@ -173,7 +173,7 @@ export const PostPage: React.FC = () => {
                             />
                             <button
                                 onClick={handleCommentSubmit}
-                                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                                className="mt-2 max-sm:text-sm px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
                             >
                                 Post Comment
                             </button>

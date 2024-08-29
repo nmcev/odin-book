@@ -11,12 +11,12 @@ export const Comment: React.FC<CommentProps> = ({ comment }) => {
             <img src={comment.author.profilePic} alt="Profile" className="rounded-full w-10 h-10 object-cover" />
             <div className="flex-1">
                 <div>
-                    <h2 className="text-[15px] font-bold">{comment.author.username}</h2>
+                    <h2 className="text-[15px] font-bold max-sm:text-sm">{comment.author.username}</h2>
                     <span className="text-xs text-gray-500 block">
                       {moment(comment.createdAt).fromNow()}
                     </span>
                 </div>
-                <p className="mt-1 text-gray-700 dark:text-white">{comment.content}</p>
+                <p className="mt-1 text-gray-700 dark:text-white max-sm:text-sm">{comment.content}</p>
             </div>
         </div>
   )
