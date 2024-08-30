@@ -14,7 +14,7 @@ export const SignupPage: React.FC = () => {
     const [username, setUsername] = useState('');
     const authContext = useContext(AuthContext)
     const navigate = useNavigate();
-    const [errors, setErrors] = useState({username: '', pw: ''})
+    const [errors, setErrors] = useState<ErrorState>({username: '', pw: ''})
 
 
     const checkUsername = async (username: string): Promise<boolean> => {
