@@ -8,6 +8,8 @@ interface PostProviderProps {
     children: ReactNode;
 }
 
+const API = import.meta.env.VITE_API
+
 
 export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => { 
 
@@ -24,7 +26,7 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
 
 
   useEffect(() => {
-    const eventSource = new EventSource('http://localhost:3000/events');
+    const eventSource = new EventSource(`${API}/events`);
 
     eventSource.onmessage = function (event) {
       const data = JSON.parse(event.data);
@@ -77,7 +79,7 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
     setLoading(true);
     setError(null);
       try {
-        const endpoint = isLoggedIn ? `http://localhost:3000/api/posts/user?page=${page}&limit=10` : `http://localhost:3000/api/posts?page=${page}&limit=10`;
+        const endpoint = isLoggedIn ? `${API}/api/posts/user?page=${page}&limit=10` : `${API}/api/posts?page=${page}&limit=10`;
 
           const response = await fetch(endpoint, {
           credentials: 'include'
@@ -106,7 +108,7 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
     
     try {
 
-      const res = await fetch(`http://localhost:3000/api/posts/like/${postId}`, {
+      const res = await fetch(`${API}/api/posts/like/${postId}`, {
         method: 'POST',
         credentials: 'include',
       });
@@ -128,7 +130,7 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
     
       try {
   
-        const res = await fetch(`http://localhost:3000/api/posts/unlike/${postId}`, {
+        const res = await fetch(`${API}/api/posts/unlike/${postId}`, {
           method: 'POST',
           credentials: 'include',
         });
@@ -156,7 +158,7 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
 
     const repost = async (postId: string) => {
     
-    const res = await fetch('http://localhost:3000/api/reposts', {
+    const res = await fetch(`${API}/api/reposts`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -180,7 +182,7 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
   const unrepost = async(postId: string) => {
 
       
-    const res = await fetch(`http://localhost:3000/api/unrepost/${postId}`, {
+    const res = await fetch(`${API}/api/unrepost/${postId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -202,7 +204,7 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
   useEffect(() => {
       const fetchNotifications = async () => {
           try {
-              const res = await fetch('http://localhost:3000/api/notifications', {
+              const res = await fetch(`${API}/api/notifications`, {
                   credentials: 'include'
               })
 

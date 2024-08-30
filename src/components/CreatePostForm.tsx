@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { PostContext } from '../contexts/PostContext';
 import { PostInterface } from '../types';
+const API = import.meta.env.VITE_API
 
 export const CreatePostForm: React.FC = () => {
   const [content, setContent] = useState('');
@@ -21,7 +22,7 @@ export const CreatePostForm: React.FC = () => {
   const postPostData = async (imgUrl?: string, content?: string) => {
     
     try {
-      const res = await fetch('http://localhost:3000/api/posts', {
+      const res = await fetch(`${API}/api/posts`, {
         method: "POST",
         credentials: 'include',
         headers: {

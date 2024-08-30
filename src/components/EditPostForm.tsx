@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { PostContext } from '../contexts/PostContext';
 import { PostInterface } from '../types';
 
+const API = import.meta.env.VITE_API
+
 export const EditPostForm: React.FC = () => {
   const [content, setContent] = useState('');
   const [img, setImg] = useState<File | null>(null);
@@ -13,7 +15,7 @@ export const EditPostForm: React.FC = () => {
 
   useEffect(() => {
     async function fetchApost() {
-      const res = await fetch(`http://localhost:3000/api/posts/${postId}`);
+      const res = await fetch(`${API}/api/posts/${postId}`);
       if (res.ok) {
         const data: PostInterface = await res.json();
         setContent(data.content);
@@ -34,7 +36,7 @@ export const EditPostForm: React.FC = () => {
 
   const postPostData = async (imgUrl?: string, content?: string, postId?: string) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/posts/${postId}`, {
+      const res = await fetch(`${API}/api/posts/${postId}`, {
         method: 'PATCH',
         credentials: 'include',
         headers: {

@@ -5,7 +5,7 @@ import { Page, PostInterface } from '../types';
 import { PostContext } from '../contexts/PostContext';
 import { AuthContext } from '../contexts/AuthContext';
 import { Comment } from '../components/Comment';
-
+const API = import.meta.env.VITE_API
 export const PostPage: React.FC = () => {
     const { postId } = useParams<{ postId: string }>();
     const [newComment, setNewComment] = useState('');
@@ -14,7 +14,7 @@ export const PostPage: React.FC = () => {
 
     const currentUser = useContext(AuthContext)?.user
     const fetchPost = async () => {
-        const res = await fetch(`http://localhost:3000/api/posts/${postId}`, {
+        const res = await fetch(`${API}/api/posts/${postId}`, {
             credentials: 'include'
         });
 
@@ -33,7 +33,7 @@ export const PostPage: React.FC = () => {
 
 
     useEffect(() => {
-        const eventSource = new EventSource('http://localhost:3000/events');
+        const eventSource = new EventSource(`${API}/events`);
     
         eventSource.onmessage = function (event) {
             const data = JSON.parse(event.data);
@@ -128,7 +128,7 @@ export const PostPage: React.FC = () => {
     const handleCommentSubmit = async () => {
 
         if (currentUser && newComment.trim()) {
-            const res = await fetch(`http://localhost:3000/api/comments`, {
+            const res = await fetch(`${API}/api/comments`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -143,7 +143,7 @@ export const PostPage: React.FC = () => {
             });
 
             if (res.ok) {
-                const updatedPost = await fetch(`http://localhost:3000/api/posts/${postId}`, {
+                const updatedPost = await fetch(`${API}/api/posts/${postId}`, {
                     credentials: 'include'
                 }).then(res => res.json());
     

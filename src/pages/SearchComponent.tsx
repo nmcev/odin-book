@@ -3,6 +3,8 @@ import { DebounceInput } from 'react-debounce-input';
 import { useNavigate } from 'react-router-dom';
 import { User } from '../types';
 
+const API = import.meta.env.VITE_API
+
 const SearchComponent: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [results, setResults] = useState<User[]>([]);
@@ -13,7 +15,7 @@ const SearchComponent: React.FC = () => {
         if (query.trim()) {
             setLoading(true); 
             try {
-                const response = await fetch(`http://localhost:3000/api/search?username=${query}`);
+                const response = await fetch(`${API}/api/search?username=${query}`);
                 if (response.ok) {
                     const data = await response.json();
                     setResults(data);

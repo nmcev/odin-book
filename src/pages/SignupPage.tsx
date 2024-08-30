@@ -7,6 +7,8 @@ type ErrorState = {
     username?: string;
     pw?: string;
 };
+const API = import.meta.env.VITE_API
+
 export const SignupPage: React.FC = () => {
     const [pw, setPw] = useState('');
     const [username, setUsername] = useState('');
@@ -17,7 +19,7 @@ export const SignupPage: React.FC = () => {
 
     const checkUsername = async (username: string): Promise<boolean> => {
         try {
-            const res = await fetch(`http://localhost:3000/api/users/${username}`);
+            const res = await fetch(`${API}/api/users/${username}`);
             if (res.ok) {
                 const user = await res.json();
                 return !!user; 

@@ -8,6 +8,7 @@ interface UserCredentials {
     password: string;
 }
 
+const API = import.meta.env.VITE_API
 interface AuthContextProps {
     login: (username: string, password: string) => void;
     register: (username: string, password: string, name: string, bio: string, file: File) => void;
@@ -38,7 +39,7 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) 
 
     const login = async (username: string, password: string) => {
         try {
-            const res = await fetch('http://localhost:3000/api/login', {
+            const res = await fetch(`${API}/api/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -64,7 +65,7 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) 
 
     const logout = async () => {
         try {
-            const res = await fetch('http://localhost:3000/api/logout', {
+            const res = await fetch(`${API}/api/logout`, {
                 method: 'POST',
                 credentials: 'include',
             });
@@ -106,7 +107,7 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) 
           
 
 
-            const res = await fetch('http://localhost:3000/api/register', {
+            const res = await fetch(`${API}/api/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -129,7 +130,7 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) 
     useEffect(() => {
         const checkSession = async () => {
             try {
-                const res = await fetch('http://localhost:3000/api/auth', {
+                const res = await fetch(`${API}/api/auth`, {
                     credentials: 'include',
                 });
 

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { FollowContext } from '../contexts/FollowContext';
 import { PostContext } from '../contexts/PostContext';
 import { PostInterface } from '../types';
+const API = import.meta.env.VITE_API
 
 export const ProfilePage:React.FC = () => {
     const authContext = useContext(AuthContext);
@@ -115,7 +116,7 @@ export const ProfilePage:React.FC = () => {
                     setPfp(result.secure_url)
 
                     
-                    await fetch('http://localhost:3000/api/edit-profile', {
+                    await fetch(`${API}/api/edit-profile`, {
                         method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json',

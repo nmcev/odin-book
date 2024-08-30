@@ -6,6 +6,8 @@ import { Post } from '../components/Post';
 import { AuthContext } from '../contexts/AuthContext';
 import { PostContext } from '../contexts/PostContext';
 import { FollowContext } from '../contexts/FollowContext';
+const API = import.meta.env.VITE_API
+
 export const UserPage: React.FC = () => {
     const { username } = useParams();
 
@@ -27,7 +29,7 @@ export const UserPage: React.FC = () => {
     const fetchAUser = async () => {
     
         try {
-            const res = await fetch(`http://localhost:3000/api/users/${username}`)
+            const res = await fetch(`${API}/api/users/${username}`)
             if (!res.ok) {
                 throw new Error('User not found');
     
@@ -60,7 +62,7 @@ export const UserPage: React.FC = () => {
 
     const handleFollowUnfollow = async () => {
         if (user) {
-            const url = `http://localhost:3000/api/${isFollowing() ? 'unfollow' : 'follow'}/${user._id}`;
+            const url = `${API}/api/${isFollowing() ? 'unfollow' : 'follow'}/${user._id}`;
             const method = isFollowing() ? 'DELETE' : 'POST';
 
             await fetch(url, {

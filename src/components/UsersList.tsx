@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 interface UsersListProps {
   followers: User[] | undefined;
 }
+const API = import.meta.env.VITE_API
+
 export const UsersList: React.FC<UsersListProps> = ({ followers }) => {
     
     const followContext = useContext(FollowContext);
@@ -17,7 +19,7 @@ export const UsersList: React.FC<UsersListProps> = ({ followers }) => {
     const currentUser = authContext?.user
 
     async function unfollow(userId: string) {
-        const res = await fetch(`http://localhost:3000/api/unfollow/${userId}`, {
+        const res = await fetch(`${API}/api/unfollow/${userId}`, {
           credentials: 'include',
           method: "DELETE",
         })
@@ -29,7 +31,7 @@ export const UsersList: React.FC<UsersListProps> = ({ followers }) => {
     
     
       const follow = async (userId: string) => {
-        const res = await fetch(`http://localhost:3000/api/follow/${userId}`, {
+        const res = await fetch(`${API}/api/follow/${userId}`, {
             credentials: 'include',
             method: 'POST',
         });

@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { User } from '../types';
+const API = import.meta.env.VITE_API
 
 export const LoginPage: React.FC = () => {
     const [pw, setPw] = useState('');
@@ -14,7 +15,7 @@ export const LoginPage: React.FC = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/demo-users');
+                const response = await fetch(`${API}/api/demo-users`);
                 const data = await response.json();
                 setUsers(data); 
             } catch (error) {

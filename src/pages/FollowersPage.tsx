@@ -5,6 +5,7 @@ import { UsersList } from '../components/UsersList';
 import { FollowContext } from '../contexts/FollowContext';
 
 
+const API = import.meta.env.VITE_API
 export const FollowersPage:  React.FC  = () => {
     const { username } = useParams();
     const [user, setUser] = useState<User>()
@@ -13,7 +14,7 @@ export const FollowersPage:  React.FC  = () => {
   
     const fetchAUser =  async() => {
     
-        const res = await fetch(`http://localhost:3000/api/users/${username}`)
+        const res = await fetch(`${API}/api/users/${username}`)
         const data = await res.json();
 
       setUser(data)
