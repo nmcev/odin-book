@@ -19,6 +19,8 @@ export const ProfilePage:React.FC = () => {
     const { reposts, setReposts, likePost, removeLike } = useContext(PostContext) || {};
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
+    const [name, setName] = useState(user?.name || '');
+    const [bio, setBio] = useState(user?.bio || '');
 
     useEffect(() => {
         if (user?.posts) setPosts(user?.posts )
@@ -111,6 +113,28 @@ export const ProfilePage:React.FC = () => {
     }
 
 
+    const handleUpdateProfileInfo = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault(); 
+        try {
+            const res = await fetch(`${API}/api/edit-profile`, {
+                method: 'PATCH',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ bio, name }),
+            });
+    
+            if (res.ok) {
+                setIsEditDialogOpen(false);
+            } else {
+                console.error('Failed to update profile info');
+            }
+        } catch (error) {
+            console.error('Network error:', error);
+        }
+    }
+
     const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
 
@@ -157,8 +181,8 @@ export const ProfilePage:React.FC = () => {
                 <div className='flex  flex-1 gap-5 justify-between'>
 
                     <div className='flex-1'>
-                        <h2 className='text-2xl font-bold'>{user?.name || 'name'}</h2>
-                        <span className='text-[15px]'>{ user?.username ||"username"}</span>
+                        <h2 className='text-2xl font-bold'>{name}</h2>
+                        <span className='text-[15px]'>{ user?.username || ''}</span>
                     </div>
 
 
@@ -197,7 +221,7 @@ export const ProfilePage:React.FC = () => {
                     {
                     isEditDialogOpen && (
 
-                    <div className='fixed inset-0 flex items-center justify-center bg-zinc-900 bg-opacity-50' >
+                    <div className='fixed inset-0 flex items-center justify-center bg-zinc-900 bg-opacity-50 z-50' >
                      <dialog open className="bg-white p-8 rounded-md">
                                 
                                 <p className='text-center font-bold text-xl'>Edit Profile</p>
@@ -208,7 +232,7 @@ export const ProfilePage:React.FC = () => {
                                 }}>
                                         &times;
                                     </button>
-                <form  className="space-y-6">
+                <form  className="space-y-6" onSubmit={handleUpdateProfileInfo}>
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">
                             Name
@@ -219,7 +243,8 @@ export const ProfilePage:React.FC = () => {
                                 name="name"
                                 type="text"
                                 required
-                                // onChange={(e) => setName(e.target.value)}
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900  dark:text-neutral-100 px-2  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -234,7 +259,8 @@ export const ProfilePage:React.FC = () => {
                                 id="bio"
                                 name="bio"
                                 required
-                                // onChange={(e) => setBio(e.target.value)}
+                                defaultValue={bio}
+                                onChange={(e) => setBio(e.target.value)}
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900   dark:text-neutral-100 px-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -257,8 +283,8 @@ export const ProfilePage:React.FC = () => {
         </div>
                         )
                     }
-                    <div className='flex flex-col gap-2 -z-20 '>
-                    <p className='text-[15px]'>{user?.bio}</p>
+                    <div className='flex flex-col gap-2  '>
+                    <p className='text-[15px]'>{bio}</p>
                     {user?.username && (
                         <div className='flex gap-3'>
                         <button onClick={() => handleFollowersPage(user.username)} className="text-[15px] text-[#999999] relative top-8 w-fit group cursor-pointer">
