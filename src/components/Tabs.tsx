@@ -6,7 +6,7 @@ interface TabsProps {
 export const Tabs: React.FC<TabsProps> = ({activeTab, setActiveTab}) => {
   
     return (
-      <div className="relative -z-10">
+      <div className="relative">
         <div className="flex border-b-[1px] border-[#999999] p-2">
           <div className="flex justify-around items-center w-full">
             <div
