@@ -222,7 +222,7 @@ export const ProfilePage:React.FC = () => {
                     isEditDialogOpen && (
 
                     <div className='fixed inset-0 flex items-center justify-center bg-zinc-900 bg-opacity-50 z-50' >
-                     <dialog open className="bg-white p-8 rounded-md">
+                     <dialog open className="bg-white dark:bg-[#262626] p-8 rounded-md">
                                 
                                 <p className='text-center font-bold text-xl'>Edit Profile</p>
                                     
