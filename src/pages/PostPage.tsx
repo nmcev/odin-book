@@ -11,6 +11,7 @@ export const PostPage: React.FC = () => {
     const [newComment, setNewComment] = useState('');
     const [post, setPost] = useState<PostInterface | null>(null);
     const postContext = useContext(PostContext);
+    const [isDisabled, setIsDisabled] = useState(false);
 
     const currentUser = useContext(AuthContext)?.user
     const fetchPost = async () => {
@@ -127,6 +128,9 @@ export const PostPage: React.FC = () => {
 
     const handleCommentSubmit = async () => {
 
+        if (isDisabled) return;
+
+        setIsDisabled(true);
         if (currentUser && newComment.trim()) {
             const res = await fetch(`${API}/api/comments`, {
                 method: 'POST',
@@ -149,6 +153,8 @@ export const PostPage: React.FC = () => {
     
                 setPost(updatedPost);
                 setNewComment('');
+                setIsDisabled(false)
+              
             }
         }
     };
@@ -171,12 +177,15 @@ export const PostPage: React.FC = () => {
                                 className="w-full p-2 border rounded-md resize-none"
                                 rows={3}
                             />
-                            <button
-                                onClick={handleCommentSubmit}
-                                className="mt-2 max-sm:text-sm px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                            >
-                                Post Comment
-                            </button>
+                           <button
+                               onClick={!isDisabled ? handleCommentSubmit : undefined}
+                               className={`mt-2 max-sm:text-sm px-4 py-2 rounded-md text-white ${
+                                   isDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
+                               }`}
+                               disabled={isDisabled} 
+                           >
+                               {isDisabled ? 'Posting...' : 'Post Comment'}
+                           </button>
                         </div>
                     }
                     <div className='flex flex-col gap-4 divide-y-[1.5px]'>

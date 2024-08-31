@@ -10,6 +10,7 @@ export const CreatePostForm: React.FC = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const navigate = useNavigate();
   const { setPosts } = useContext(PostContext) || {}
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -33,6 +34,7 @@ export const CreatePostForm: React.FC = () => {
 
       const newPost = await res.json();
       if (res.ok) {
+        setIsDisabled(false)
         navigate('/')
         setPosts?.((prevPosts: PostInterface[]) => {
           if (!prevPosts) return [newPost];
@@ -47,6 +49,9 @@ export const CreatePostForm: React.FC = () => {
 
   const handleSubmitPost =  async() => {
     
+    if (isDisabled) return;
+
+    setIsDisabled(true)
     // case where there is an image attached with the post
     if (img) {
       const formData = new FormData();
@@ -114,7 +119,14 @@ export const CreatePostForm: React.FC = () => {
           
         <div className="buttons flex">
           <div className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto dark:text-neutral-100" onClick={() =>(navigate('/'))}>Cancel</div>
-          <div className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500" onClick={handleSubmitPost}>Post</div>
+          <div 
+             className={`btn border p-1 px-4 font-semibold ml-2 cursor-pointer ${
+               isDisabled ? "bg-gray-400 text-gray-100" : "bg-indigo-500 text-gray-200"
+             }`} 
+             onClick={!isDisabled ? handleSubmitPost : undefined}
+           >
+             {isDisabled ? "Posting..." : "Post"}
+           </div>
         </div>
          </div>
       </>
