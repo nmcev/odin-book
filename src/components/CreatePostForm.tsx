@@ -82,7 +82,7 @@ export const CreatePostForm: React.FC = () => {
 <div className="heading text-center font-bold text-2xl m-5 text-gray-800 dark:text-neutral-100">New Post</div>
 
       <div className="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
-        <textarea  onChange={(e) =>  setContent(e.target.value)} value={content} className="description bg-gray-100 dark:bg-[#101010] sec p-3 h-60 border border-gray-300 outline-none" spellCheck="true" placeholder="What's on your mind right now🤔?"></textarea>
+        <textarea  onChange={(e) =>  setContent(e.target.value)} value={content} className="description bg-gray-100 dark:bg-[#101010] dark:text-neutral-100 sec p-3 h-60 border border-gray-300 outline-none" spellCheck="true" placeholder="What's on your mind right now🤔?"></textarea>
 
           <div className="icons flex text-gray-500 m-2">
           <label>
