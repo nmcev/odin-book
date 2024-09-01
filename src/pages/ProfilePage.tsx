@@ -53,7 +53,7 @@ export const ProfilePage:React.FC = () => {
     }
 
     const handleFollowingPage = () => {
-        navigate(`/profile/following`);
+        navigate(`/${user?.username}/following`);
     }
 
 
