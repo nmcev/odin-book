@@ -109,7 +109,7 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
 
        <div className=' flex gap-4'>
             <div className='flex gap-1 items-center'>
-              <div onClick={() => {
+              <div className='logo-hover' onClick={() => {
 
                 currentUserId ? handleLike() : setOpenDialog(true)
               }
