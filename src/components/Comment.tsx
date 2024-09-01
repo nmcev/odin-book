@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { CommentInterface } from '../types'
+import { Link } from 'react-router-dom'
 
 interface CommentProps {
     comment: CommentInterface
@@ -11,7 +12,7 @@ export const Comment: React.FC<CommentProps> = ({ comment }) => {
             <img src={comment.author.profilePic} alt="Profile" className="rounded-full w-10 h-10 object-cover" />
             <div className="flex-1">
                 <div>
-                    <h2 className="text-[15px] font-bold max-sm:text-sm">{comment.author.username}</h2>
+                    <Link className="text-[15px] font-bold max-sm:text-sm" to={`/${comment.author.username}`}>{comment.author.username}</Link>
                     <span className="text-xs text-gray-500 block">
                       {moment(comment.createdAt).fromNow()}
                     </span>
