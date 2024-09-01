@@ -61,11 +61,9 @@ const router = createBrowserRouter([
         element:<FollowersPage />
       },
       {
-        path: '/profile/following',
+        path: '/:username/following',
         element:
-          <ProtectedRoute>
             <FollowingPage />
-          </ProtectedRoute>
       },
       {
         path: '/edit-post/:postId',
