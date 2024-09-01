@@ -197,7 +197,7 @@ export const UserPage: React.FC = () => {
                 </button>
 
                 <button onClick={() => handleFollowingPage(user.username)} className="text-[15px] text-[#999999] relative top-8 w-fit group cursor-pointer">
-                    <span className="text-[15px]">{following?.length || 0}</span> following
+                    <span className="text-[15px]">{user.following?.length || 0}</span> following
                     <span className="block h-[1px] w-full bg-slate-700 absolute top-[17px] left-0 scale-x-0 group-hover:scale-x-100 "></span>
                 </button>
                 </div>
