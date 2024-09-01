@@ -163,7 +163,7 @@ export const UserPage: React.FC = () => {
     }
     
   return (
-    <div className="min-h-screen mt-24  mx-auto flex  flex-col  gap-8 max-w-2xl">
+    <div className="min-h-screen mt-52 mx-4  flex  flex-col  gap-8 max-w-2xl">
             
     {/* above section */}
     <div className='flex flex-col gap-1 justify-center'>
