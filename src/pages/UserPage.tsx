@@ -51,6 +51,10 @@ export const UserPage: React.FC = () => {
         navigate(`/${username}/followers`);
     }
 
+
+    const handleFollowingPage = (username: string) => {
+        navigate(`/${username}/following`)
+    }
     useEffect(() => {
         fetchAUser()
 
@@ -163,7 +167,7 @@ export const UserPage: React.FC = () => {
     }
     
   return (
-    <div className="min-h-screen mt-52 mx-4  flex  flex-col  gap-8 max-w-2xl">
+    <div className="min-h-screen max-sm:mt-52 max-sm:mx-4 mt-24 mx-auto  flex  flex-col  gap-8 max-w-2xl">
             
     {/* above section */}
     <div className='flex flex-col gap-1 justify-center'>
@@ -192,6 +196,10 @@ export const UserPage: React.FC = () => {
                     <span className="block h-[1px] w-full bg-slate-700 absolute top-[17px] left-0 scale-x-0 group-hover:scale-x-100 "></span>
                 </button>
 
+                <button onClick={() => handleFollowingPage(user.username)} className="text-[15px] text-[#999999] relative top-8 w-fit group cursor-pointer">
+                    <span className="text-[15px]">{following?.length || 0}</span> following
+                    <span className="block h-[1px] w-full bg-slate-700 absolute top-[17px] left-0 scale-x-0 group-hover:scale-x-100 "></span>
+                </button>
                 </div>
             )}
             </div>
