@@ -312,19 +312,23 @@ export const ProfilePage:React.FC = () => {
             <div className=" flex items-center flex-col divide-y-[1.5px] gap-2">
 
                 
-                {activeTab === 'Threads' ? (posts.map((post) => {
-                    return (
-                        <Post key={post._id} post={post} onLike={() => handleLike(post)} edit={true} />
-
-                    )
-                })
-                ) : (
-                    (reposts?.map((post) => (
-                        <Post key={post._id} post={post} onLike={() =>  handleLike(post)} />
-                    ))
-                    )  
-                )
-        }
+            {activeTab === 'Threads' ? (
+        posts.length > 0 ? (
+            posts.map((post) => (
+                <Post key={post._id} post={post} onLike={() => handleLike(post)} edit={true} />
+            ))
+        ) : (
+            <p className="text-gray-500">No posts to show.</p>
+        )
+    ) : (
+        reposts && reposts.length > 0 ? (
+            reposts.map((post) => (
+                <Post key={post._id} post={post} onLike={() => handleLike(post)} />
+            ))
+        ) : (
+            <p className="text-gray-500">No reposts to show.</p>
+        )
+    )}
             </div>
         </div>
   )
