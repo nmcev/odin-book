@@ -54,6 +54,7 @@ export interface PostContextProps {
     repost: (postId: string) => Promise<void>; 
     unrepost: (postId: string) => Promise<void>
     notifications: NotificationType[];
+    deletePost: (postId: string) => Promise<void>
 
 }
   

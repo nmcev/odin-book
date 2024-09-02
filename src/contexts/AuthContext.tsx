@@ -19,7 +19,7 @@ interface AuthContextProps {
     isLoggedIn: boolean;
     loading: boolean;
     loginError: string
-}
+    setUser: React.Dispatch<React.SetStateAction<User | null>>;}
 
 interface AuthContextProviderProps {
     children: ReactNode
@@ -155,7 +155,7 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) 
     }, []);
 
     return ( 
-        <AuthContext.Provider value={{ login, isLoggedIn, user, loading , logout, register, setUserCredentials, credentials, loginError}}>
+        <AuthContext.Provider value={{ login, isLoggedIn, user, loading , logout, register, setUserCredentials, credentials, loginError, setUser}}>
           
             {loading ? (
                 <div className="flex justify-center items-center h-screen">
