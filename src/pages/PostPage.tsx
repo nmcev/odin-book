@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Post } from '../components/Post';
 import { Page, PostInterface } from '../types';
 import { PostContext } from '../contexts/PostContext';
 import { AuthContext } from '../contexts/AuthContext';
 import { Comment } from '../components/Comment';
+import { FaArrowLeft } from 'react-icons/fa'
+
 const API = import.meta.env.VITE_API
 export const PostPage: React.FC = () => {
     const { postId } = useParams<{ postId: string }>();
@@ -12,6 +14,7 @@ export const PostPage: React.FC = () => {
     const [post, setPost] = useState<PostInterface | null>(null);
     const postContext = useContext(PostContext);
     const [isDisabled, setIsDisabled] = useState(false);
+    const navigate = useNavigate();
 
     const currentUser = useContext(AuthContext)?.user
     const fetchPost = async () => {
@@ -162,7 +165,13 @@ export const PostPage: React.FC = () => {
     
     return (
         
-        <div className="min-h-screen sm:my-24 my-44 flex items-center flex-col divide-y-[1.5px] ">
+        <div className="min-h-screen sm:my-24 my-44 flex items-start justify-center   ">
+            <button
+                className="flex items-center text-gray-500 hover:text-gray-700"
+                onClick={() => navigate(-1)}
+            >
+                <FaArrowLeft className='mr-4' />
+            </button>
             {post ? (
                 <div className='flex flex-col gap-4 '>
                     <Post post={post} page={Page.PostPage} onLike={handleLike} />
