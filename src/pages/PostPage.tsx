@@ -6,6 +6,7 @@ import { PostContext } from '../contexts/PostContext';
 import { AuthContext } from '../contexts/AuthContext';
 import { Comment } from '../components/Comment';
 import { FaArrowLeft } from 'react-icons/fa'
+import { PostSkeleton } from '../components/PostSkeleton';
 
 const API = import.meta.env.VITE_API
 export const PostPage: React.FC = () => {
@@ -204,7 +205,7 @@ export const PostPage: React.FC = () => {
                         </div>
                 </div>
             ) : (
-                <div>Loading...</div>
+                    <PostSkeleton />
             )}
         </div>
     );
