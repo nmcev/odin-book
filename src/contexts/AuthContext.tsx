@@ -10,7 +10,7 @@ interface UserCredentials {
 
 const API = import.meta.env.VITE_API
 interface AuthContextProps {
-    login: (username: string, password: string) => void;
+    login: (username: string, password: string) => Promise<boolean | undefined>;
     register: (username: string, password: string, name: string, bio: string, file: File) => void;
     logout: () => void; 
     setUserCredentials: (credentials: UserCredentials) => void;
@@ -57,8 +57,10 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) 
             const data = await res.json();
             setUser(data.user);
             setIsLoggedIn(true);
+            return true
         } catch (error) {
             console.error('Error during login:', error);
+            return false
         }
     };
 
@@ -121,7 +123,6 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) 
             }
 
 
-            await login(username, password)
         } catch (error) {
             console.error('Error during registration:', error);
         }

@@ -8,37 +8,49 @@ export const ProfileSetupPage: React.FC = () => {
     const [profilePic, setProfilePic] = useState<File | null>(null);
     const authContext = useContext(AuthContext);
     const navigate = useNavigate();
-
     const handleProfilePicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             setProfilePic(e.target.files[0]);
         }
     };
 
+    const [loading, setLoading] = useState(false);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-
-        if (authContext?.credentials && profilePic) {
-            const registrationData = {
-                username: authContext?.credentials.username,
-                password: authContext?.credentials.password,
-                name,
-                bio,
-                profilePic,
-            };
+        setLoading(true);
     
-          authContext?.register(registrationData.username, registrationData.password, registrationData.name, registrationData.bio, registrationData.profilePic)
-            
-          navigate('/');
-
-        } else {
-            // set error 'Username or password is missing'
+        try {
+            if (authContext?.credentials && profilePic) {
+                const registrationData = {
+                    username: authContext?.credentials.username,
+                    password: authContext?.credentials.password,
+                    name,
+                    bio,
+                    profilePic,
+                };
+    
+                await authContext.register(
+                    registrationData.username,
+                    registrationData.password,
+                    registrationData.name,
+                    registrationData.bio,
+                    registrationData.profilePic
+                );
+    
+                if (await authContext.login(authContext.credentials.username, authContext.credentials.password)) {
+                    navigate('/');
+                }
+            } else {
                 console.error("Username or password is missing");
-
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+        } finally {
+            setLoading(false);
         }
-
-    };
+    }
+    
 
 
     if (!authContext?.credentials.username && !authContext?.credentials.password) {
@@ -107,12 +119,13 @@ export const ProfileSetupPage: React.FC = () => {
                     </div>
 
                     <div>
-                        <button
-                            type="submit"
-                            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        >
-                            Save Profile
-                        </button>
+                    <button
+                         type="submit"
+                         disabled={loading}
+                         className={`flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 ${loading ? 'opacity-50' : ''} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                     >
+                         {loading ? 'Saving...' : 'Save Profile'}
+                     </button>
                     </div>
                 </form>
             </div>
