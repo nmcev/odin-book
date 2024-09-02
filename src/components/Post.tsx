@@ -21,7 +21,7 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
   const [isBouncing, setIsBouncing] = useState(false);
 
   const [openedDialog, setOpenDialog] = useState(false);
-  const {repost, reposts, unrepost} = useContext(PostContext) || {}
+  const {repost, reposts, unrepost, deletePost} = useContext(PostContext) || {}
 
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const currentUser = useContext(AuthContext)?.user 
@@ -156,11 +156,16 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
         {isDropdownVisible &&
                 (
               <>
-                <div className='relative inline-block z-10 mt-8 max-w-sm'>
-                  <Link to={`/edit-post/${post._id}`} className="block w-full rounded-lg shadow-md bg-white p-4 text-red-500 z-10">
+                <div className='relative inline-block z-10 mt-8 max-w-sm divide-y-2 '>
+                  <Link to={`/edit-post/${post._id}`} className="block w-full rounded-lg  text-center shadow-md bg-white p-4 text-red-500 z-10">
                       Edit Post
                   </Link>
-                  </div>
+              
+              <button onClick={() => { if (deletePost) deletePost(post._id) }}
+                className="block w-full rounded-lg shadow-md p-4 text-center  text-neutral-100 bg-red-500 z-10">
+                      Delete Post
+                 </button>
+                </div>
 
                 </>
 

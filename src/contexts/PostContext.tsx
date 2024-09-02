@@ -11,10 +11,10 @@ interface PostProviderProps {
 const API = import.meta.env.VITE_API
 
 
-export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => { 
+export const PostProvider: React.FC<PostProviderProps> = ({ children }) => {
 
 
-  const currentUser = useContext(AuthContext)?.user;
+  const { user: currentUser, setUser } = useContext(AuthContext) || {}
   const [posts, setPosts] = useState<PostInterface[]>([]);
   const [reposts, setReposts] = useState<PostInterface[]>([]);
   const [page, setPage] = useState(1);
@@ -199,7 +199,42 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
 
   }
 
+  const deletePost = async(postId: string) => {
 
+    try {
+      const res = await fetch(`${API}/api/posts/${postId}`, {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (res.ok && setUser) {
+        setPosts((prevPosts) => {
+          const updatedPosts = prevPosts.filter(post => post._id !== postId);
+          
+          return updatedPosts;
+        });
+
+        setUser((prevUser) => {
+          if (!prevUser) return null; 
+  
+          
+          const updatedPosts = prevUser.posts?.filter(post => post._id !== postId);
+  
+          return {
+              ...prevUser,
+              posts: updatedPosts, 
+          };
+      });
+          
+      }
+    }
+    catch (e) {
+      console.error(e)
+    }
+  } 
 
   useEffect(() => {
       const fetchNotifications = async () => {
@@ -220,7 +255,7 @@ export const PostProvider: React.FC<PostProviderProps> = ({ children  }) => {
 
 
     return (
-        <PostContext.Provider value={{ posts, fetchPosts, loading, error, hasMore, page, setPage, likePost, removeLike, setPosts, setReposts, reposts, repost, notifications, unrepost }}>
+        <PostContext.Provider value={{ posts, fetchPosts, loading, error, hasMore, page, setPage, likePost, removeLike, setPosts, setReposts, reposts, repost, notifications, unrepost, deletePost }}>
         {children}
       </PostContext.Provider>
     )
