@@ -3,6 +3,7 @@ import { Post } from "../components/Post";
 import { PostContext } from "../contexts/PostContext";
 import { AuthContext } from "../contexts/AuthContext";
 import { Page, PostInterface } from "../types";
+import { PostSkeleton } from "../components/PostSkeleton";
 
 export const HomePage = () => {
   const postContext = useContext(PostContext);
@@ -10,7 +11,9 @@ export const HomePage = () => {
 
 
 
+  const skeletonCount = 5;
 
+  const skeletonPosts = new Array(skeletonCount).fill(<PostSkeleton />)
   const handleScroll =  useCallback(() => {
     const isScrollAtBottom = window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight;
 
@@ -50,7 +53,9 @@ export const HomePage = () => {
       ))}
 
       {!postContext?.hasMore && <h1>No more content</h1>}
-      {postContext?.loading && <h1>Loading</h1>}
+      {postContext?.loading && skeletonPosts.map((post) => (
+        post
+      ))}
 
     </div>
   );
