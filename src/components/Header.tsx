@@ -74,11 +74,9 @@ export const Header: React.FC = () => {
           {/* login button */}
       {!authContext?.isLoggedIn ? (
         <div className='rounded-lg px-8 py-4 grid items-center'>
-          <button className='bg-black text-white rounded-lg px-4 py-[7px] font-semibold font-sans text-sm'>
-            <Link to={'/login'}>
+            <Link className='bg-black text-white text-center rounded-lg px-4 py-[7px] font-semibold font-sans text-sm' to={'/login'}>
               Log in
             </Link>
-          </button>
         </div>
 
       ) : (
