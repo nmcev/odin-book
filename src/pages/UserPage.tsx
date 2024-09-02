@@ -6,6 +6,9 @@ import { Post } from '../components/Post';
 import { AuthContext } from '../contexts/AuthContext';
 import { PostContext } from '../contexts/PostContext';
 import { FollowContext } from '../contexts/FollowContext';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css'
+
 const API = import.meta.env.VITE_API
 
 export const UserPage: React.FC = () => {
@@ -176,19 +179,27 @@ export const UserPage: React.FC = () => {
         <div className='flex flex-1 gap-5 justify-between'>
 
             <div className='flex-1'>
-                <h2 className='text-2xl font-bold'>{user?.name || 'name'}</h2>
-                <span className='text-[15px]'>{ user?.username ||"username"}</span>
+                <h2 className='text-2xl font-bold'> {user?.name ? user.name : <Skeleton width={150} />}
+                </h2>
+                      <span className='text-[15px]'>{user?.username || <Skeleton width={100} />}</span>
             </div>
 
 
              {/* image section */}
-             <div className='rounded-full'>
-                 <img  src={user?.profilePic || ''} className='object-cover rounded-full h-20 w-20' alt={user?.name} />
+                  <div className='rounded-full'>
+                      {
+                          user?.profilePic ? (
+                            <img  src={user?.profilePic || ''} className='object-cover rounded-full h-20 w-20' alt={user?.name} />
+
+                          ): (
+                            <Skeleton circle={true} baseColor='gray' height={80} width={80} />
+                          )
+                      }
              </div>
         </div>
         
             <div className='flex flex-col gap-2 '>
-            <p className='text-[15px]'>{user?.bio}</p>
+            <p className='text-[15px]'>{user?.bio || <Skeleton count={2} width={250} />}</p>
             {user?.username && (
                 <div className='flex gap-3'>
                 <button onClick={() => handleFollowersPage(user.username)} className="text-[15px] text-[#999999] relative top-8 w-fit group cursor-pointer">
