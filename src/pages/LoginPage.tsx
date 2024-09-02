@@ -73,7 +73,10 @@ export const LoginPage: React.FC = () => {
                         
                     <div>
                                 <label htmlFor="user-select" className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">
-                                    Select a User to login 
+                                    Select a guest User to Login
+                                    <span className="block text-xs text-gray-600 dark:text-neutral-400 mt-1">
+                                        (guest accounts for testing purposes only)
+                                    </span>
                                 </label>
                                 <div className="mt-2">
                                     <select
