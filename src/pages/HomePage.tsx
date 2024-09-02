@@ -53,8 +53,10 @@ export const HomePage = () => {
       ))}
 
       {!postContext?.hasMore && <h1>No more content</h1>}
-      {postContext?.loading && skeletonPosts.map((post) => (
-        post
+      {postContext?.loading && skeletonPosts.map((post, i) => (
+        <div key={i}>
+          {post}
+        </div>
       ))}
 
     </div>
