@@ -2,7 +2,6 @@ import React, {useEffect} from 'react'
 
 export const Dialog: React.FC<{ message: string, onClose: () => void }> = ({ message, onClose }) => {
     useEffect(() => {
-      document.body.style.overflow = 'hidden';
   
       const handleEscapeClose = (e: KeyboardEvent) => {
         if (e.key === 'Escape') {
@@ -18,9 +17,10 @@ export const Dialog: React.FC<{ message: string, onClose: () => void }> = ({ mes
     }, [onClose]);
   
   
-    return (
-      <div className='fixed inset-0 flex items-center justify-center bg-zinc-900 bg-opacity-50'>
-        <div className="bg-white  dark:bg-neutral-600 p-6 rounded-lg shadow-lg">
+  return (
+    <div className='fixed inset-0 flex items-center justify-center bg-zinc-900 bg-opacity-50 z-50' >
+      <dialog open className="bg-white dark:bg-[#262626] p-8 rounded-md">
+
           <p className=' dark:text-neutral-100 px-2 font-bold '>{message}</p>
           <button
             onClick={onClose}
@@ -29,7 +29,7 @@ export const Dialog: React.FC<{ message: string, onClose: () => void }> = ({ mes
           >
             Close
           </button>
-        </div>
+      </dialog>
       </div>
     )
     
