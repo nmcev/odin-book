@@ -10,7 +10,8 @@ import { AuthContext } from '../contexts/AuthContext'
 import moment from 'moment'
 import { Dialog } from './Dialog'
 import { PostContext } from '../contexts/PostContext'
-
+import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton from 'react-loading-skeleton'
 
 
 
@@ -91,8 +92,8 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
       {post.media && (
            <>
               
-            {!isImageLoaded && (
-              <div className="placeholder bg-neutral-300 h-72 " ></div>
+                {!isImageLoaded && (
+                  <Skeleton width={300} height={300} enableAnimation={true} />
              )}
             
                 <div className='max-w-lg sm:h-72 '>
