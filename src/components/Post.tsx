@@ -129,7 +129,7 @@ export const Post: React.FC<PostProps> = ({ post, page, onLike, edit }) => {
           {  page !== Page.PostPage &&        
             <Link className='flex gap-1 items-center' to={`/${post.author.username}/${post._id}`} >
             <CommentIcon />
-              <span className=' font-normal  text-[#424242] dark:text-neutral-100 text-xs text-start'>{post.comments.length}</span>
+              <span className=' font-normal  text-[#424242] dark:text-neutral-100 text-xs text-start select-none'>{post.comments.length}</span>
               </Link>
             }
 
